@@ -312,7 +312,6 @@ GameObject:
   - component: {fileID: 332456580}
   - component: {fileID: 332456579}
   - component: {fileID: 332456578}
-  - component: {fileID: 332456577}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -320,18 +319,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &332456577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 332456575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 357b312ced6f1b54b89ec3faef3e8675, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
 --- !u!114 &332456578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f974cd114be094eb523125c487b495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  playerInput: {fileID: 332456577}
 --- !u!114 &332456579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,9 +343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5a86c5615d48b4e857fa04e17342bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AbilityExecutor
-  ability: {fileID: 11400000, guid: f17474e2f270ce749884f2c4dd69a947, type: 2}
+  ability: {fileID: 11400000, guid: 50ea4cbb37cee42478e8d7593da446e2, type: 2}
   passiveAbilities:
-  - {fileID: 11400000, guid: f17474e2f270ce749884f2c4dd69a947, type: 2}
+  - {fileID: 11400000, guid: f8982aee06aa29c42874e9e425d91144, type: 2}
   target: {fileID: 36884001}
 --- !u!4 &332456580
 Transform:

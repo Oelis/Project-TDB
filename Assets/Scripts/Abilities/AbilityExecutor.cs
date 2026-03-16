@@ -3,8 +3,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class AbilityExecutor : MonoBehaviour
 {
-    [SerializeField] private AbilityData ability;
-    [SerializeField] private List<AbilityData> passiveAbilities;
+    [SerializeField] private ActiveAbility ability;
+    [SerializeField] private List<PassiveAbility> passiveAbilities;
     [SerializeField] private GameObject target;
 
     public void Execute(GameObject pTarget)

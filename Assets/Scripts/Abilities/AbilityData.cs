@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public abstract class AbilityData : ScriptableObject
 {
@@ -17,6 +19,8 @@ public abstract class AbilityData : ScriptableObject
         if (effects == null) effects = new List<AbilityEffect>();
     }
 }
+
+
 [CreateAssetMenu(fileName = "AbilityData", menuName = "Spell/ActiveAbility")]
 class ActiveAbility : AbilityData
 {

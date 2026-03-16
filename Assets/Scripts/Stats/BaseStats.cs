@@ -2,14 +2,14 @@ using System;
 using UnityEngine;
 
 
-public class BaseStats 
+public class UnitBaseStats 
 {
     public int attack = 10;
     public int defense = 10;
     
     public int intelligence = 10;
     public int dexterity = 10;
-    public int force = 10;
+    public int strength = 10;
     public int constitution = 10;
     public int speed = 10;
 

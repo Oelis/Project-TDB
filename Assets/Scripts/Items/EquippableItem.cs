@@ -3,8 +3,6 @@ using UnityEngine.Serialization;
 
 public abstract class EquippableItem : Item
 {
-    public int defense = 10;
-    
     public int intelligence = 10;
     public int dexterity = 10;
     public int force = 10;

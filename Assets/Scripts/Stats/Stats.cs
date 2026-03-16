@@ -3,31 +3,31 @@ using UnityEngine;
 public class Stats
 {
     private readonly StatsMediator mediator;
-    readonly BaseStats baseStats;
+    readonly UnitBaseStats baseStats;
     
     public StatsMediator Mediator => mediator;
     
-    public int Attack
+    public int Intelligence
     {
         get
         {
-            var q = new Query(StatType.Attack, baseStats.attack);
+            var q = new Query(StatType.Intelligence, baseStats.intelligence);
             mediator.PerformQuery(this,q);
             return q.Value;
         }
     }
 
-    public int Defense
+    public int Strength
     {
         get
         {
-            var q = new Query(StatType.Defense, baseStats.defense);
+            var q = new Query(StatType.Strength, baseStats.strength);
             mediator.PerformQuery(this,q);
             return q.Value;
         }
     }
 
-    public Stats(StatsMediator mediator, BaseStats baseStats)
+    public Stats(StatsMediator mediator, UnitBaseStats baseStats)
     {
         this.mediator = mediator;
         this.baseStats = baseStats;

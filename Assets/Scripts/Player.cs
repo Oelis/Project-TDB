@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(AbilityExecutor))]
 public class Player : MonoBehaviour, IDamageable
 {
-    [SerializeField] private PlayerInput playerInput;
-    
-    
+    [SerializeField] UnitBaseStats baseStats;
+    public Stats Stats { get;private set; }
     void Awake()
     {
+        Stats = new Stats(new StatsMediator(), baseStats);
         Registery<IDamageable>.TryAdd(this);
     }
     

@@ -25,11 +25,16 @@ public abstract class StatModifier : IDisposable
     public bool MarkedForRemoval { get; private set; }
     
     public event Action<StatModifier> OnDispose = delegate { };
+    
+    readonly int turnDuration;
 
     protected StatModifier(int turns)
     {
-        if (turns < 0) return;  
-        
+        if (turns < 0) return;
+        else
+        {
+            turnDuration = turns;
+        }
         // When Turns == 0 Dispose
     }
     public abstract void Handle(object sender, Query query);
