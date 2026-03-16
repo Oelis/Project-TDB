@@ -1,0 +1,18 @@
+OVDF v1.1
+AbilityData, Assembly-CSharp
+MetaGuid:9262732397ae9474bbfcd4c270947adc
+
+# effects
++ [Sirenix.OdinInspector.ListDrawerSettingsAttribute]
+	HideAddButton = False
+	AlwaysAddDefaultValue = False
+	ElementColor = null
+	paging = False
+	pagingHasValue = True
+	ShowFoldout = False
+	draggable = True
+	draggableHasValue = True
+	showItemCount = True
+	showItemCountHasValue = True
+	showIndexLabels = True
+	showIndexLabelsHasValue = True
