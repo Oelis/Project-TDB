@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
-public class UnitBaseStats 
+public abstract class UnitConfig : ScriptableObject
 {
     public int attack = 10;
     public int defense = 10;
@@ -23,4 +24,7 @@ public class UnitBaseStats
     public int iceResist;
     public int poisonResist;
     public int lightningResist;
+    
+    public List<ActiveAbility> activeAbilities;
+    public List<PassiveAbility> passiveAbilities;
 }

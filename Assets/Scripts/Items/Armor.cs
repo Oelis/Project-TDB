@@ -14,11 +14,3 @@ public class Armor : EquippableItem
     public int poisonResist;
     public int lightningResist;
 }
-
-public enum ArmorType
-{
-    Helmet,
-    Chest,
-    Legs
-}
-

@@ -9,7 +9,7 @@ public abstract class EquippableItem : Item
     public int constitution = 10;
     public int speed = 10;
     
-    public List<AbilityEffect> passiveAbilities;
+    public List<IEffect<IDamageable>> passiveAbilities;
 }
 
 

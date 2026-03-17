@@ -18,19 +18,4 @@ public class StatsMediator
             Queries -= modifier.Handle;
         };
     }
-
-    public void Update(int turns)
-    {
-        var node = modifiers.First;
-        while (node != null)
-        {
-            var nextNode = node.Next;
-
-            if (node.Value.MarkedForRemoval)
-            {
-                node.Value.Dispose(); 
-            }
-            node = nextNode;
-        }
-    }
 }

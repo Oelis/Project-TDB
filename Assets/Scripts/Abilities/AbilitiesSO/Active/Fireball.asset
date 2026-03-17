@@ -15,18 +15,8 @@ MonoBehaviour:
   name: Fireball
   description: 
   icon: {fileID: 0}
-  effects:
-  - rid: 986349166892941312
-  - rid: 986349166892941313
+  effects: []
   animationClip: {fileID: 0}
   references:
     version: 2
-    RefIds:
-    - rid: 986349166892941312
-      type: {class: DirectDamageEffect, ns: , asm: Assembly-CSharp}
-      data:
-        amount: 0
-    - rid: 986349166892941313
-      type: {class: KnockbackEffect, ns: , asm: Assembly-CSharp}
-      data:
-        force: 0
+    RefIds: []

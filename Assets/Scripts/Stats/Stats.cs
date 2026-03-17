@@ -3,7 +3,7 @@ using UnityEngine;
 public class Stats
 {
     private readonly StatsMediator mediator;
-    readonly UnitBaseStats baseStats;
+    readonly UnitConfig _config;
     
     public StatsMediator Mediator => mediator;
     
@@ -11,7 +11,7 @@ public class Stats
     {
         get
         {
-            var q = new Query(StatType.Intelligence, baseStats.intelligence);
+            var q = new Query(StatType.Intelligence, _config.intelligence);
             mediator.PerformQuery(this,q);
             return q.Value;
         }
@@ -21,15 +21,15 @@ public class Stats
     {
         get
         {
-            var q = new Query(StatType.Strength, baseStats.strength);
+            var q = new Query(StatType.Strength, _config.strength);
             mediator.PerformQuery(this,q);
             return q.Value;
         }
     }
 
-    public Stats(StatsMediator mediator, UnitBaseStats baseStats)
+    public Stats(StatsMediator mediator, UnitConfig config)
     {
         this.mediator = mediator;
-        this.baseStats = baseStats;
+        this._config = config;
     }
 }
