@@ -1,9 +1,10 @@
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class Stats
 {
     private readonly StatsMediator mediator;
-    readonly UnitConfig _config;
+    readonly UnitConfig config;
     
     public StatsMediator Mediator => mediator;
     
@@ -11,7 +12,7 @@ public class Stats
     {
         get
         {
-            var q = new Query(StatType.Intelligence, _config.intelligence);
+            var q = new Query(StatType.Intelligence, config.intelligence);
             mediator.PerformQuery(this,q);
             return q.Value;
         }
@@ -21,7 +22,17 @@ public class Stats
     {
         get
         {
-            var q = new Query(StatType.Strength, _config.strength);
+            var q = new Query(StatType.Strength, config.strength);
+            mediator.PerformQuery(this,q);
+            return q.Value;
+        }
+    }
+
+    public float CriChance
+    {
+        get
+        {
+            var q = new Query(StatType.CriticalChance, config.criticalChance);
             mediator.PerformQuery(this,q);
             return q.Value;
         }
@@ -30,6 +41,6 @@ public class Stats
     public Stats(StatsMediator mediator, UnitConfig config)
     {
         this.mediator = mediator;
-        this._config = config;
+        this.config = config;
     }
 }

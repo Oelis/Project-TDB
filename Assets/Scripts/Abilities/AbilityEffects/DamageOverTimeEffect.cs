@@ -9,7 +9,7 @@ public abstract class DamageOverTimeEffect : IEffect<IDamageable>
     
     protected IDamageable currentTarget;
     
-    public void Apply(IDamageable target)
+    public void Apply(Unit source,IDamageable target)
     {
         currentTarget = target;
         currentTarget.ApplyEffect(this);

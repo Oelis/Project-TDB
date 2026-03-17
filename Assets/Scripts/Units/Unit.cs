@@ -8,13 +8,13 @@ public abstract class Unit : MonoBehaviour, IDamageable
     public event Action OnTurnEnd;
     public float health;
     
-    [SerializeField] UnitConfig _config; 
+    public readonly UnitConfig config; 
     protected readonly List<IEffect<IDamageable>> activeEffects = new();
     public Stats Stats { get; private set; }
 
     protected virtual void Awake()
     {
-        Stats = new Stats(new StatsMediator(), _config);
+        Stats = new Stats(new StatsMediator(), config);
     }
     
     public abstract void TakeDamage(float damage, DamageType damageType);
