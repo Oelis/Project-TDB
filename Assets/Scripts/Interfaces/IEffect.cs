@@ -1,8 +1,11 @@
 using System;
+using Units;
 
-public interface IEffect<TTarget>
+namespace Interfaces
 {
-    void Apply(Unit source, TTarget target);
-    void Cancel();
-    event Action<IEffect<TTarget>> OnCompleted;
+    public interface IEffect<TTarget>
+    {
+        void Apply(Unit source, TTarget target);
+        void Cleanup();
+    }
 }

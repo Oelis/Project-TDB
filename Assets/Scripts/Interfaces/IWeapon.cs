@@ -1,4 +1,7 @@
-public interface IWeapon
+namespace Interfaces
 {
-    void Fire(IDamageable target);
+    public interface IWeapon
+    {
+        void Fire(IDamageable target);
+    }
 }

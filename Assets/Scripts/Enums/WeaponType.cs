@@ -1,9 +1,12 @@
-public enum WeaponType
+namespace Enums
 {
-    Staff,
-    Sword,
-    Dagger,
-    Shield,
-    Axe,
-    Bow
+    public enum WeaponType
+    {
+        Staff,
+        Sword,
+        Dagger,
+        Shield,
+        Axe,
+        Bow
+    }
 }

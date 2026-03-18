@@ -1,7 +1,10 @@
-public enum StatType
+namespace Enums
 {
-    Attack,Defense,Intelligence,Dexterity,
-    Strength,Constitution,Speed,CriticalChance,
-    CriticalDamageMultiplier,EvadeRate,BlockRate,FireResist,
-    IceResist,PoisonResist,LightningResist
+    public enum StatType
+    {
+        Attack,Defense,Intelligence,Dexterity,
+        Strength,Constitution,Speed,CriticalChance,
+        CriticalDamageMultiplier,EvadeRate,BlockRate,FireResist,
+        IceResist,PoisonResist,LightningResist
+    }
 }

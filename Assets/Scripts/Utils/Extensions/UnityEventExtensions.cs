@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace UnityUtils {
+namespace Utils.Extensions {
     public static class UnityEventExtensions {
         /// <summary>
         /// Converts a UnityEvent with a parameter into an Awaitable that completes when the event is invoked.

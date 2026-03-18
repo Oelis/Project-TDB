@@ -1,26 +1,13 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
+using Enums;
+using Interfaces;
 
-public class Enemy : Unit, IDamageable
+namespace Units
 {
-    public override void TakeDamage(float damage, DamageType damageType)
+    public class Enemy : Unit, IDamageable
     {
-        throw new NotImplementedException();
-    }
-
-    public override void Die()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void ApplyEffect(IEffect<IDamageable> effectOverTime)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void RemoveEffect(IEffect<IDamageable> effectOverTime)
-    {
-        throw new NotImplementedException();
+        
     }
 }
+
+

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Fireball
+  m_EditorClassIdentifier: Assembly-CSharp:Abilities:ActiveAbility
+  name: Fireball
+  description: 
+  icon: {fileID: 0}
+  effects:
+  - rid: 8745054079522177212
+  - rid: 8745054079522177213
+  animationClip: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8745054079522177212
+      type: {class: DamageEffect, ns: Abilities.AbilityEffects, asm: Assembly-CSharp}
+      data:
+        damageAmount: 10
+        damageType: 0
+    - rid: 8745054079522177213
+      type: {class: DamageOverTimeEffect, ns: Abilities.AbilityEffects, asm: Assembly-CSharp}
+      data:
+        MaxStackSize: 1
+        damagePerTurn: 0
+        damageType: 1

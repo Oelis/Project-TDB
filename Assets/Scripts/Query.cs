@@ -1,3 +1,5 @@
+using Enums;
+
 public class Query
 {
     public readonly StatType StatType;

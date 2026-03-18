@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UnityUtils {
+namespace Utils.Extensions {
     public static class CameraExtensions {
         /// <summary>
         /// Calculates and returns viewport extents with an optional margin. Useful for calculating a frustum for culling.

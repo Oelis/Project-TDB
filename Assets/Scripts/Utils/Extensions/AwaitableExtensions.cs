@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityUtils {
+namespace Utils.Extensions {
     public static class AwaitableExtensions {
         /// <summary>
         /// Repeatedly polls a condition until it returns true.

@@ -1,46 +1,49 @@
-using TMPro.EditorUtilities;
-using UnityEngine;
+using Enums;
+using Units;
 
-public class Stats
+namespace Stats
 {
-    private readonly StatsMediator mediator;
-    readonly UnitConfig config;
+    public class Stats
+    {
+        private readonly StatsMediator mediator;
+        readonly UnitConfig _statConfig;
     
-    public StatsMediator Mediator => mediator;
+        public StatsMediator Mediator => mediator;
     
-    public int Intelligence
-    {
-        get
+        public int Intelligence
         {
-            var q = new Query(StatType.Intelligence, config.intelligence);
-            mediator.PerformQuery(this,q);
-            return q.Value;
+            get
+            {
+                var q = new Query(StatType.Intelligence, _statConfig.intelligence);
+                mediator.PerformQuery(this,q);
+                return q.Value;
+            }
         }
-    }
 
-    public int Strength
-    {
-        get
+        public int Strength
         {
-            var q = new Query(StatType.Strength, config.strength);
-            mediator.PerformQuery(this,q);
-            return q.Value;
+            get
+            {
+                var q = new Query(StatType.Strength, _statConfig.strength);
+                mediator.PerformQuery(this,q);
+                return q.Value;
+            }
         }
-    }
 
-    public float CriChance
-    {
-        get
+        public float CriChance
         {
-            var q = new Query(StatType.CriticalChance, config.criticalChance);
-            mediator.PerformQuery(this,q);
-            return q.Value;
+            get
+            {
+                var q = new Query(StatType.CriticalChance, _statConfig.criticalChance);
+                mediator.PerformQuery(this,q);
+                return q.Value;
+            }
         }
-    }
 
-    public Stats(StatsMediator mediator, UnitConfig config)
-    {
-        this.mediator = mediator;
-        this.config = config;
+        public Stats(StatsMediator mediator, UnitConfig statConfig)
+        {
+            this.mediator = mediator;
+            this._statConfig = statConfig;
+        }
     }
 }

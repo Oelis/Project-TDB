@@ -1,27 +1,30 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public delegate T ObjectsInRegistery<T>(IEnumerable<T> items);
-public class Registery<T> where T : class
+namespace Utils
 {
-    static readonly HashSet<T> items = new();
-
-    public static bool TryAdd(T item)
+    public delegate T ObjectsInRegistery<T>(IEnumerable<T> items);
+    public class Registery<T> where T : class
     {
-        return item != null && items.Add(item);
-    }
+        static readonly HashSet<T> items = new();
 
-    public static bool Remove(T item)
-    {
-        return items.Remove(item);
-    }
+        public static bool TryAdd(T item)
+        {
+            return item != null && items.Add(item);
+        }
 
-    public static T GetFirst()
-    {
-        return items.FirstOrDefault();
-    }
+        public static bool Remove(T item)
+        {
+            return items.Remove(item);
+        }
+
+        public static T GetFirst()
+        {
+            return items.FirstOrDefault();
+        }
     
-    public static T Get(ObjectsInRegistery<T> itemsRegistery) => itemsRegistery(items);
+        public static T Get(ObjectsInRegistery<T> itemsRegistery) => itemsRegistery(items);
     
-    public static IEnumerable<T> All => items;
+        public static IEnumerable<T> All => items;
+    }
 }

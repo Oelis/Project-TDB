@@ -1,15 +1,18 @@
 using System.Collections.Generic;
-using UnityEngine.Serialization;
+using Interfaces;
 
-public abstract class EquippableItem : Item
+namespace Items
 {
-    public int intelligence = 10;
-    public int dexterity = 10;
-    public int force = 10;
-    public int constitution = 10;
-    public int speed = 10;
+    public abstract class EquippableItem : Item
+    {
+        public int intelligence = 10;
+        public int dexterity = 10;
+        public int force = 10;
+        public int constitution = 10;
+        public int speed = 10;
     
-    public List<IEffect<IDamageable>> passiveAbilities;
+        public List<IEffect<IDamageable>> PassiveAbilities;
+    }
 }
 
 

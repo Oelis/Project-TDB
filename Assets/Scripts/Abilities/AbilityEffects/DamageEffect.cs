@@ -1,20 +1,27 @@
 using System;
+using Enums;
+using Interfaces;
+using Units;
 
-[Serializable]
-public class DamageEffect : IEffect<IDamageable>
+namespace Abilities.AbilityEffects
 {
-    public int damageAmount = 10;
-    public DamageType damageType;
-    public event Action<IEffect<IDamageable>> OnCompleted;
-    public void Apply(Unit source, IDamageable target)
+    [Serializable]
+    public class DamageEffect : IEffect<IDamageable>
     {
-        //if(CritPolicy.GetOrCreate().Roll(source.Stats.CriChance)) damageAmount = damageAmount * source.Stats.Strength;
-        target.TakeDamage(damageAmount,damageType);
-        OnCompleted?.Invoke(this);
-    }
-
-    public void Cancel()
-    {
-        OnCompleted?.Invoke(this);
+        public int damageAmount = 10;
+        public DamageType damageType;
+        
+        public event Action<IEffect<IDamageable>> OnCompleted;
+        public void Apply(Unit source, IDamageable target)
+        {
+            //if(CritPolicy.GetOrCreate().Roll(source.Stats.CriChance)) damageAmount = damageAmount * source.Stats.Strength;
+            target.TakeDamage(damageAmount,damageType);
+            OnCompleted?.Invoke(this);
+        }
+        
+        public void Cleanup()
+        {
+        }
+        
     }
 }

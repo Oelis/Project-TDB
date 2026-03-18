@@ -1,21 +1,24 @@
 using System;
 using System.Collections.Generic;
 
-public class StatsMediator
+namespace Stats
 {
-    readonly LinkedList<StatModifier> modifiers = new();
-    public event EventHandler<Query> Queries;
-    public void PerformQuery(object sender, Query query) => Queries.Invoke(sender, query);
-
-    public void AddModifier(StatModifier modifier)
+    public class StatsMediator
     {
-        modifiers.AddLast(modifier);
-        Queries += modifier.Handle;
+        readonly LinkedList<StatModifier> modifiers = new();
+        public event EventHandler<Query> Queries;
+        public void PerformQuery(object sender, Query query) => Queries.Invoke(sender, query);
 
-        modifier.OnDispose += _ =>
+        public void AddModifier(StatModifier modifier)
         {
-            modifiers.Remove(modifier);
-            Queries -= modifier.Handle;
-        };
+            modifiers.AddLast(modifier);
+            Queries += modifier.Handle;
+
+            modifier.OnDispose += _ =>
+            {
+                modifiers.Remove(modifier);
+                Queries -= modifier.Handle;
+            };
+        }
     }
 }

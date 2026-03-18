@@ -1,7 +1,10 @@
-public enum HoldType
+namespace Enums
 {
-    MainHand,
-    OffHand,
-    TwoHand,
-    EitherHand
+    public enum HoldType
+    {
+        MainHand,
+        OffHand,
+        TwoHand,
+        EitherHand
+    }
 }

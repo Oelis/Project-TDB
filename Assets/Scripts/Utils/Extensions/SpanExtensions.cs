@@ -1,6 +1,6 @@
 using System;
 
-namespace UnityUtils {
+namespace Utils.Extensions {
     public static class SpanExtensions {
         /// <summary>
         /// Copies a block of elements from one span to another.

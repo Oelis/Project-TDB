@@ -1,10 +1,12 @@
-using UnityEngine;
-
-public enum DamageType
+namespace Enums
 {
-    PhysicalDamage,
-    FireDamage,
-    IceDamage,
-    LightningDamage,
-    PoisonDamage
+    public enum DamageType
+    {
+        PhysicalDamage,
+        BleedDamage,
+        FireDamage,
+        IceDamage,
+        LightningDamage,
+        PoisonDamage
+    }
 }

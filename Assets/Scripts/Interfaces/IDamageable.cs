@@ -1,16 +1,25 @@
 using System;
+using Abilities.AbilityEffects;
+using Enums;
 
-public interface IDamageable
+namespace Interfaces
 {
-    void TakeDamage(float damage, DamageType type);
+    public interface IDamageable
+    {
+        void TakeDamage(float damage, DamageType type);
 
-    void Die();
+        void Die();
 
-    void ApplyEffect(IEffect<IDamageable> effect);
+        void ApplyEffect(EffectOverTime effect);
+        
+        bool CanApplyEffect(EffectOverTime effect);
+        
+        bool IsDamageImmuneTo(DamageType type);
     
-    void RemoveEffect(IEffect<IDamageable> effect);
+        void RemoveEffect(EffectOverTime effect);
 
-    public event Action OnTurnStart;
-    public event Action OnTurnEnd;
+        public event Action OnTurnStart;
+        public event Action OnTurnEnd;
 
+    }
 }
