@@ -3,10 +3,10 @@ using Enums;
 using Interfaces;
 using Units;
 
-namespace Abilities.AbilityEffects.Debuffs.DOT
+namespace Abilities.AbilityEffects
 {
     [Serializable]
-    public abstract class DamageOverTimeEffect :Debuff, IEffect<IDamageable>
+    public abstract class DamageOverTimeEffect :EffectOverTime, IEffect<IDamageable>, IDebuff
     {
         public int damagePerTurn;
         

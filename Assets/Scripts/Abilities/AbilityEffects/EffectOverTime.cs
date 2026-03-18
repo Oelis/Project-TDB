@@ -10,9 +10,8 @@ namespace Abilities.AbilityEffects
     {
         private int _turnDuration = 1;
         public int MaxStackSize = 1;
-        public bool CanBeStacked = true;
         public bool CanBeCleanse = true;
-        public abstract EffectType EffectType { get; }
+        public abstract bool CanBeStacked { get; }
 
         protected IDamageable CurrentTarget;
         public event Action<EffectOverTime> OnCompleted;

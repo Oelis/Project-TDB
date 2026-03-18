@@ -1,13 +1,13 @@
 using Abilities.AbilityEffects.Debuffs.DOT;
 using Attributes;
 using Enums;
+using Interfaces;
 
 namespace Abilities.AbilityEffects.Buffs.Immunity
 {
-    [Immunity (typeof(IceDOT))]
+    [Immunity (typeof(IceDot))]
     [Immunity (DamageType.IceDamage)]
-    public class IceImmunity : Buff
+    public class IceImmunity : ImmunityEffect, IBuff
     {
-        
     }
 }

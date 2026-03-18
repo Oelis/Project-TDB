@@ -1,15 +1,14 @@
 using Abilities.AbilityEffects.Debuffs.DOT;
 using Attributes;
 using Enums;
+using Interfaces;
 
 namespace Abilities.AbilityEffects.Buffs.Immunity
 {
-    [Immunity (typeof(FireDOT))]
+    [Immunity (typeof(FireDot))]
     [Immunity (DamageType.FireDamage)]
     
-    public class FireImmunity : Buff
-
+    public class FireImmunity : ImmunityEffect, IBuff
     {
-
     }
 }

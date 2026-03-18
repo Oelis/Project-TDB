@@ -5,20 +5,20 @@ namespace Stats
 {
     public class BasicStatModifier : StatModifier
     {
-        readonly StatType type;
-        readonly Func<int, int> operation;
+        private readonly StatType _type;
+        private readonly Func<int, int> _operation;
 
         public BasicStatModifier(StatType type, int turnDuration, Func<int, int> operation) : base(turnDuration)
         {
-            this.type = type;
-            this.operation = operation;
+            this._type = type;
+            this._operation = operation;
         }
 
         public override void Handle(object sender, Query query)
         {
-            if (query.StatType == type)
+            if (query.StatType == _type)
             {
-                query.Value = operation(query.Value);   
+                query.Value = _operation(query.Value);   
             }
         }
     }

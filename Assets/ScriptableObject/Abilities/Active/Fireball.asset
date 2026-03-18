@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Fireball
   m_EditorClassIdentifier: Assembly-CSharp:Abilities:ActiveAbility
-  name: Fireball
+  abilityName: Fireball
   description: 
   icon: {fileID: 0}
   effects:
   - rid: 8745054079522177212
-  - rid: 8745054079522177213
+  - rid: 8745054079522177214
+  - rid: 8745054079522177215
   animationClip: {fileID: 0}
   references:
     version: 2
@@ -27,9 +28,14 @@ MonoBehaviour:
       data:
         damageAmount: 10
         damageType: 0
-    - rid: 8745054079522177213
-      type: {class: DamageOverTimeEffect, ns: Abilities.AbilityEffects, asm: Assembly-CSharp}
+    - rid: 8745054079522177214
+      type: {class: LighningDOT, ns: Abilities.AbilityEffects.Debuffs.DOT, asm: Assembly-CSharp}
       data:
         MaxStackSize: 1
+        CanBeCleanse: 1
         damagePerTurn: 0
-        damageType: 1
+    - rid: 8745054079522177215
+      type: {class: FireImmunity, ns: Abilities.AbilityEffects.Buffs.Immunity, asm: Assembly-CSharp}
+      data:
+        MaxStackSize: 1
+        CanBeCleanse: 1

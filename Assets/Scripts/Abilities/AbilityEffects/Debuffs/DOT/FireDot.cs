@@ -2,9 +2,10 @@ using Enums;
 
 namespace Abilities.AbilityEffects.Debuffs.DOT
 {
-    public class FireDOT: DamageOverTimeEffect
+    public class FireDot: DamageOverTimeEffect
 
     {
         public override DamageType DamageType => DamageType.FireDamage;
+        public override bool CanBeStacked => true;
     }
 }

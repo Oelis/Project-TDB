@@ -1,10 +1,12 @@
 using Abilities.AbilityEffects.Debuffs;
 using Attributes;
+using Enums;
+using Interfaces;
 
 namespace Abilities.AbilityEffects.Buffs.Immunity
 {
-    [Immunity(typeof(Debuff))]
-    public class DebuffImmunity : Buff
+    [Immunity(typeof(IDebuff))]
+    public class DebuffImmunity : ImmunityEffect, IBuff
     {
         
     }

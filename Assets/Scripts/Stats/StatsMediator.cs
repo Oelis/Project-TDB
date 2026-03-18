@@ -5,18 +5,18 @@ namespace Stats
 {
     public class StatsMediator
     {
-        readonly LinkedList<StatModifier> modifiers = new();
+        private readonly LinkedList<StatModifier> _modifiers = new();
         public event EventHandler<Query> Queries;
-        public void PerformQuery(object sender, Query query) => Queries.Invoke(sender, query);
+        public void PerformQuery(object sender, Query query) => Queries?.Invoke(sender, query);
 
         public void AddModifier(StatModifier modifier)
         {
-            modifiers.AddLast(modifier);
+            _modifiers.AddLast(modifier);
             Queries += modifier.Handle;
 
             modifier.OnDispose += _ =>
             {
-                modifiers.Remove(modifier);
+                _modifiers.Remove(modifier);
                 Queries -= modifier.Handle;
             };
         }

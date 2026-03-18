@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Abilities.AbilityEffects;
-using Abilities.AbilityEffects.Buffs;
-using Abilities.AbilityEffects.Buffs.Immunity;
-using Abilities.AbilityEffects.Debuffs;
 using Attributes;
 using Enums;
 using Interfaces;
@@ -22,13 +19,14 @@ namespace Units
         public float health;
     
         public readonly UnitConfig StatConfig; 
-        protected readonly List<EffectOverTime> ongoingEffects = new();
-        protected readonly List<ImmunityEffect> immunityeffects = new();
+        protected readonly List<EffectOverTime> OngoingEffects = new();
+        protected readonly List<ImmunityEffect> Immunityeffects = new();
+        
         // Separate static caches
         private static readonly ConcurrentDictionary<Type, Type[]> TypeImmunityCache = new();
         private static readonly ConcurrentDictionary<Type, DamageType[]> DamageTypeImmunityCache = new();
 
-        public Stats.Stats Stats { get; private set; }
+        public Stats.Stats Stats {get; private set; }
 
         protected virtual void Awake()
         {
@@ -47,7 +45,7 @@ namespace Units
 
         public virtual void Die()
         {
-            foreach (var effect in ongoingEffects)
+            foreach (var effect in OngoingEffects)
             {
                 effect.OnCompleted -= RemoveEffect;
                 effect.Cleanup();
@@ -55,23 +53,11 @@ namespace Units
             Destroy(gameObject);
         }
         
-        private static readonly Dictionary<EffectType, Type> ImmunityTypeMap = new()
-        {
-            { EffectType.Buff, typeof(BuffImmunity) },
-            { EffectType.Debuff, typeof(DebuffImmunity) }
-        };
-        
         public bool CanApplyEffect(EffectOverTime effect)
         {
-            
-            if (effect.EffectType == EffectType.Buff && ongoingEffects.OfType<BuffImmunity>().Any())
-                return false;
-            if (effect.EffectType == EffectType.Debuff && ongoingEffects.OfType<DebuffImmunity>().Any())
-                return false;
-
             var effectType = effect.GetType();
 
-            return !immunityeffects.Any(immunity =>
+            return !Immunityeffects.Any(immunity =>
             {
                 
                 var immuneToTypes = GetTypeImmunityInfo(immunity.GetType());
@@ -83,7 +69,6 @@ namespace Units
                 return false;
             });
             
-            return true;
         }
         
         
@@ -124,7 +109,7 @@ namespace Units
 
         public bool IsDamageImmuneTo(DamageType type)
         {
-            return immunityeffects.Any(immunity =>
+            return Immunityeffects.Any(immunity =>
             {
                 var immuneToDamageTypes = GetDamageTypeImmunityInfo(immunity.GetType());
                 return immuneToDamageTypes.Contains(type);
@@ -135,10 +120,10 @@ namespace Units
         {
             if(!CanApplyEffect(effect)) return;
             effect.OnCompleted += RemoveEffect;
-            ongoingEffects.Add(effect);
+            OngoingEffects.Add(effect);
             if (effect is ImmunityEffect immunity)
             {
-                immunityeffects.Add(immunity);
+                Immunityeffects.Add(immunity);
             }
         }
 
@@ -146,10 +131,10 @@ namespace Units
         public virtual void RemoveEffect(EffectOverTime effect)
         {
             effect.OnCompleted -= RemoveEffect;
-            ongoingEffects.Remove(effect);
+            OngoingEffects.Remove(effect);
             if (effect is ImmunityEffect immunity)
             {
-                immunityeffects.Remove(immunity);
+                Immunityeffects.Remove(immunity);
             }
         }
     
