@@ -3,9 +3,9 @@ using Units;
 
 namespace Interfaces
 {
-    public interface IEffect<TTarget>
+    public interface IEffect
     {
-        void Apply(Unit source, TTarget target);
+        void Apply(UnitBrain source, UnitBrain target);
         void Cleanup();
         
     }

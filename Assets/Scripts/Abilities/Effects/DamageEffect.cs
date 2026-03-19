@@ -6,17 +6,14 @@ using Units;
 namespace Abilities.AbilityEffects
 {
     [Serializable]
-    public class DamageEffect : IEffect<IDamageable>
+    public class DamageEffect : IEffect
     {
         public int damageAmount = 10;
         public DamageType damageType;
-        
-        public event Action<IEffect<IDamageable>> OnCompleted;
-        public void Apply(Unit source, IDamageable target)
+        public void Apply(UnitBrain source, UnitBrain target)
         {
             //if(CritPolicy.GetOrCreate().Roll(source.Stats.CriChance)) damageAmount = damageAmount * source.Stats.Strength;
             target.TakeDamage(damageAmount,damageType);
-            OnCompleted?.Invoke(this);
         }
         
         public void Cleanup()

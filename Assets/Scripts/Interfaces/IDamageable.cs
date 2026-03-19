@@ -12,10 +12,6 @@ namespace Interfaces
 
         void ApplyEffect(EffectOverTime effect);
         
-        bool CanApplyEffect(EffectOverTime effect);
-        
-        bool IsDamageImmuneTo(DamageType type);
-    
         void RemoveEffect(EffectOverTime effect);
 
         public event Action OnTurnStart;

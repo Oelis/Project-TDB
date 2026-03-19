@@ -6,9 +6,10 @@ namespace Stats
     public class BasicStatModifier : StatModifier
     {
         private readonly StatType _type;
-        private readonly Func<int, int> _operation;
-
-        public BasicStatModifier(StatType type, int turnDuration, Func<int, int> operation) : base(turnDuration)
+        private readonly Func<object, object> _operation;
+        
+        // Generic constructor (most flexible)
+        public BasicStatModifier(StatType type, int turnDuration, Func<object, object> operation) : base(turnDuration)
         {
             this._type = type;
             this._operation = operation;
@@ -18,7 +19,9 @@ namespace Stats
         {
             if (query.StatType == _type)
             {
-                query.Value = _operation(query.Value);   
+                var currentValue = query.GetValue();
+                var newValue = _operation(currentValue);
+                query.SetValue(newValue);
             }
         }
     }

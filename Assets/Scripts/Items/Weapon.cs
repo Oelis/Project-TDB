@@ -8,7 +8,7 @@ namespace Items
     public class Weapon : EquippableItem
     {
         private ItemType itemType = ItemType.Weapon;
-        public Ability activeAbility;
+        public ActiveAbility activeAbility;
         public WeaponType WeaponType;
         public HoldType HoldType;
         public int criticalChance;

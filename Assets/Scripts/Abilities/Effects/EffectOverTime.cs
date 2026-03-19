@@ -6,7 +6,7 @@ using Units;
 namespace Abilities.AbilityEffects
 
 {
-    public abstract class EffectOverTime : IEffect<IDamageable>
+    public abstract class EffectOverTime : IEffect
     {
         private int _turnDuration = 1;
         public int MaxStackSize = 1;
@@ -16,17 +16,18 @@ namespace Abilities.AbilityEffects
         protected IDamageable CurrentTarget;
         public event Action<EffectOverTime> OnCompleted;
 
-        public virtual void Apply(Unit source, IDamageable target)
+        public virtual void Apply(UnitBrain source, UnitBrain target)
         {
             CurrentTarget = target;
-            if (!CurrentTarget.CanApplyEffect(this)) return;
             CurrentTarget.ApplyEffect(this);
+            CurrentTarget.OnTurnStart += Tick;
             CurrentTarget.OnTurnEnd += CountDown;
         }
 
         public virtual void Cleanup()
         {
             OnCompleted?.Invoke(this);
+            CurrentTarget.OnTurnStart -= Tick;
             CurrentTarget.OnTurnEnd -= CountDown;
             CurrentTarget = null;
         }
@@ -42,6 +43,11 @@ namespace Abilities.AbilityEffects
                     break;
             }
             if(_turnDuration == 0) Cleanup();
+        }
+
+        public virtual void Tick()
+        {
+            
         }
 
         

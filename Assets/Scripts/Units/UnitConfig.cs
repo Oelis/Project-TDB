@@ -15,10 +15,10 @@ namespace Units
         public int constitution = 10;
         public int speed = 10;
 
-        public int criticalChance;
-        public int criticalDamageMultiplier;
-        public int evadeRate;
-        public int blockRate;
+        public float criticalChance = 0.15f;
+        public float criticalDamageMultiplier = 1.5f;
+        public float evadeRate = 0.15f;
+        public float blockRate = 0.15f;
 
         public int physicalResist;
         public int fireResist;

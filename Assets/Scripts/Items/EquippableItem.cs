@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Abilities;
 using Interfaces;
 
 namespace Items
@@ -11,7 +12,7 @@ namespace Items
         public int constitution = 10;
         public int speed = 10;
     
-        public List<IEffect<IDamageable>> PassiveAbilities;
+        public List<PassiveAbility> PassiveAbilities;
     }
 }
 

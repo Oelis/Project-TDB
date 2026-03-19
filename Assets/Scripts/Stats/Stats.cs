@@ -14,7 +14,7 @@ namespace Stats
         {
             get
             {
-                var q = new Query(StatType.Intelligence, _statConfig.intelligence);
+                var q = QueryFactory.Create(StatType.Intelligence, _statConfig.intelligence);
                 _mediator.PerformQuery(this,q);
                 return q.Value;
             }
@@ -24,7 +24,7 @@ namespace Stats
         {
             get
             {
-                var q = new Query(StatType.Strength, _statConfig.strength);
+                var q = QueryFactory.Create(StatType.Strength, _statConfig.strength);
                 _mediator.PerformQuery(this,q);
                 return q.Value;
             }
@@ -34,7 +34,7 @@ namespace Stats
         {
             get
             {
-                var q = new Query(StatType.CriticalChance, _statConfig.criticalChance);
+                var q = QueryFactory.Create(StatType.CriticalChance, _statConfig.criticalChance);
                 _mediator.PerformQuery(this,q);
                 return q.Value;
             }

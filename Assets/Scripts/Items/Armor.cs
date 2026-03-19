@@ -3,13 +3,12 @@ using UnityEngine;
 
 namespace Items
 {
-    [CreateAssetMenu (fileName = "Armor", menuName = "Equipment/Armor")]
-    public class Armor : EquippableItem
+    public abstract class Armor : EquippableItem
     {
         private ItemType itemType = ItemType.Armor;
-        public ArmorType armorType;
-        public int evadeRate;
-        public int blockRate;
+        public abstract ArmorType armorType { get; }
+        public float evadeRate;
+        public float blockRate;
 
         public int physicalResist;
         public int fireResist;

@@ -13,7 +13,7 @@ namespace Abilities
     
         public Texture icon;
     
-        [SerializeReference] public List<IEffect<IDamageable>> effects = new();
+        [SerializeReference] public List<IEffect> effects = new();
 
         private void OnEnable()
         {
