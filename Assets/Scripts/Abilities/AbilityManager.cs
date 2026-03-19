@@ -28,11 +28,14 @@ namespace Abilities
         public void AddPassiveAbility(PassiveAbility ability)
         {
             _passiveAbilities.Add(ability);
+            
+            Debug.Log("Passive Ability Added : " + ability.name + "");
         }
         
         public void AddActiveAbility(ActiveAbility ability)
         {
             _activeAbilities.Add(ability);
+            Debug.Log("Active Ability Added : " + ability.name + "");
         }
         
     }

@@ -41,9 +41,13 @@ namespace Units
             // Check if blocked
             // Calculate final damage output
             currentHealth -= damage;
-            
         }
-        
+
+        public void Heal(float amount)
+        {
+            currentHealth += amount;
+        }
+
         public void Die()
         {
             var activeDot = dotLogic.GetDamageOvertime();
@@ -92,6 +96,11 @@ namespace Units
                     dotLogic.RemoveDamageOvertime(damageOverTime);
                     break;
             }
+        }
+
+        public void SetSource(Unit source)
+        {
+            this.source = source;
         }
     }
     

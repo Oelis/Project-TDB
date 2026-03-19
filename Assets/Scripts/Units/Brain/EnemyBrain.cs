@@ -6,13 +6,19 @@ using Stats;
 namespace Units.Logic
 {
     [Serializable]
-    public class EnemyBrain : UnitBrain
+    public abstract class EnemyBrain : UnitBrain
     {
         private EnemyConfig _config;
-
-        public EnemyBrain Build()
+        
+        public EnemyBrain WithSource(Unit source)
         {
-            SetupAbilities();
+            this.source = source;
+            return this;
+        }
+        
+        public EnemyBrain WithAbilityManager()
+        {
+            this.abilityManager = new AbilityManager(this);
             return this;
         }
 
@@ -25,18 +31,6 @@ namespace Units.Logic
         public EnemyBrain WithStats(Stats.Stats stats)
         {
             this.Stats = new Stats.Stats(new StatsMediator(), this._config);
-            return this;
-        }
-        
-        public EnemyBrain WithSource(Unit source)
-        {
-            this.source = source;
-            return this;
-        }
-
-        public EnemyBrain WithAbilityManager()
-        {
-            this.abilityManager = new AbilityManager(this);
             return this;
         }
         
@@ -53,5 +47,12 @@ namespace Units.Logic
                 abilityManager.AddActiveAbility(activeAbility);
             }
         }
+        
+        public EnemyBrain Build()
+        {
+            SetupAbilities();
+            return this;
+        }
+        public EnemyBrain Clone() => (EnemyBrain)MemberwiseClone(); 
     }
 }

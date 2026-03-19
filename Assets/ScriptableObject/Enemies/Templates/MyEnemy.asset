@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d003f1f8194245ad8db891adc78f674f, type: 3}
+  m_Name: MyEnemy
+  m_EditorClassIdentifier: Assembly-CSharp::Units.Template.EnemyTemplate
+  enemyBrain:
+    rid: 8745054108885188676
+  enemyConfig: {fileID: 11400000, guid: a11577af648f044a59fd1ba17c397b64, type: 2}
+  model: {fileID: 7058121152221351574, guid: 3e76b9a9c801848baade4ded119ee452, type: 3}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8745054108885188676
+      type: {class: SkeletonBrain, ns: Units.Logic, asm: Assembly-CSharp}
+      data: 

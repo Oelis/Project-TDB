@@ -20,17 +20,4 @@ namespace Abilities
             if (string.IsNullOrEmpty(abilityName)) abilityName = this.name;
         }
     }
-
-
-    [CreateAssetMenu(fileName = "ActiveAbility", menuName = "Spell/ActiveAbility")]
-    public class ActiveAbility : Ability
-    {
-        public AnimationClip animationClip;
-    }
-
-    [CreateAssetMenu(fileName = "PassiveAbility", menuName = "Spell/PassiveAbility")]
-    public class PassiveAbility : Ability
-    {
-    
-    }
 }
