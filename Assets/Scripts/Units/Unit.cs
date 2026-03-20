@@ -17,9 +17,7 @@ namespace Units
     public class Unit : MonoBehaviour 
     {
         private UnitBrain _Brain;
-
         
-
         public void Kill()
         {
             Destroy(gameObject);

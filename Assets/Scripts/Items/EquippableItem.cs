@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Abilities;
 using Interfaces;
+using Sirenix.OdinInspector;
 
 namespace Items
 {

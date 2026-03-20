@@ -1,18 +1,19 @@
+using Sirenix.OdinInspector;
 using Units;
 using Units.Brain;
 using Units.Template;
 using UnityEngine;
+using Utils;
 
 public class Test : MonoBehaviour
 {
     public EncountersTemplate encounters;
 
-    public Spawner spawner;
+    [Required] public Spawner spawner;
     
+    [Required] public PlayerTemplate PlayerTemplate;
     
-    public PlayerTemplate PlayerTemplate;
-    
-    public PlayerSquad playerSquad;
+    [Required] public PlayerSquad playerSquad;
 
     private void Start()
     {
@@ -27,11 +28,8 @@ public class Test : MonoBehaviour
         var enemy = Registry<EnemyBrain>.GetFirst();
         
         var ability = player.GetAbilityController().GetAbility(0);
-        Debug.Log(ability.name);
-
         
-        //Debug.Log(enemy);
-        //player.GetAbilityController().CastAbility(player.GetAbilityController().GetAbility(0),enemy);
+        player.GetAbilityController().CastAbility(ability,enemy);
 
     }
 }

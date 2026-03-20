@@ -16,13 +16,12 @@ MonoBehaviour:
   description: 
   icon: {fileID: 0}
   effects:
-  - rid: 8745054143206654163
-  animationClip: {fileID: 0}
+  - rid: 8745054163123830973
   references:
     version: 2
     RefIds:
-    - rid: 8745054143206654163
-      type: {class: DamageEffect, ns: Abilities.AbilityEffects, asm: Assembly-CSharp}
+    - rid: 8745054163123830973
+      type: {class: DamageEffect, ns: Abilities.Effects, asm: Assembly-CSharp}
       data:
         damageAmount: 10
-        damageType: 2
+        damageType: 0

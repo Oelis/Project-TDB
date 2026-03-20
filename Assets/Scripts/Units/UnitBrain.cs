@@ -11,6 +11,7 @@ using Interfaces;
 using NUnit.Framework;
 using Stats;
 using Units.Logic;
+using UnityEngine;
 
 namespace Units
 {
@@ -42,6 +43,7 @@ namespace Units
             // Check if evaded
             // Check if blocked
             // Calculate final damage output
+            Debug.Log("Damage Taken");
             currentHealth -= damage;
         }
 

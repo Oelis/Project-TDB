@@ -1,8 +1,9 @@
-using System.ComponentModel.DataAnnotations;
+using Sirenix.OdinInspector;
 using Units.Brain;
 using Units.Configs;
 using Units.Logic;
 using UnityEngine;
+using Utils;
 
 namespace Units.Template
 {

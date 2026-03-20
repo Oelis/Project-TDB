@@ -20,11 +20,11 @@ namespace Units
         public float evadeRate = 0.15f;
         public float blockRate = 0.15f;
 
-        public int physicalResist;
-        public int fireResist;
-        public int iceResist;
-        public int poisonResist;
-        public int lightningResist;
+        public int physicalResist = 10;
+        public int fireResist = 10;
+        public int iceResist = 10;
+        public int poisonResist = 10;
+        public int lightningResist = 10;
     
         public List<ActiveAbility> activeAbilities;
         public List<PassiveAbility> passiveAbilities;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Interfaces;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 
@@ -7,13 +8,13 @@ namespace Abilities
 {
     public abstract class Ability : ScriptableObject
     {
-        public string abilityName;
+        [Required] public string abilityName;
     
-        public string description;
+        [Required] public string description;
     
-        public Texture icon;
+        [Required] public Texture icon;
     
-        [SerializeReference] public List<IEffect> effects = new();
+        [SerializeReference,Required] public List<IEffect> effects = new();
 
         private void OnEnable()
         {

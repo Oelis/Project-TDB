@@ -2807,7 +2807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.Test
   encounters: {fileID: 11400000, guid: 47c5289e4142f418c8035df456fe20db, type: 2}
   spawner: {fileID: 610303402}
-  player: {fileID: 11400000, guid: 0f3eb539d0ce4422196a1f3e83fc8fb6, type: 2}
+  PlayerTemplate: {fileID: 11400000, guid: 0f3eb539d0ce4422196a1f3e83fc8fb6, type: 2}
   playerSquad: {fileID: 11400000, guid: 73f84a34e56e54251b3a89a12ddf75a8, type: 2}
 --- !u!4 &1994137557
 Transform:

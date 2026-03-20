@@ -7,7 +7,7 @@ namespace Abilities
 {
     public class AbilityController 
     {
-        private List<ActiveAbility> _activeAbilities = new List<ActiveAbility>();   
+        private readonly List<ActiveAbility> _activeAbilities = new List<ActiveAbility>();   
         private List<PassiveAbility> _passiveAbilities = new List<PassiveAbility>();
         
         private UnitBrain source;
@@ -15,6 +15,7 @@ namespace Abilities
         public AbilityController(UnitBrain source)
         {
             this.source = source;
+            Debug.Log($"Ability Controller Created for {source.GetType().Name}");
         }
         public void CastAbility(ActiveAbility abilityToCast, UnitBrain target)
         {

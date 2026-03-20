@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Items
@@ -10,9 +11,9 @@ namespace Items
     }
     public abstract class Item : ScriptableObject
     {
-        public Texture icon;
-        public string name;
-        public string description;
+        [Required] public Texture icon;
+        [Required] public string name;
+        [Required] public string description;
         public int stackSize;
         public int rarity;
     

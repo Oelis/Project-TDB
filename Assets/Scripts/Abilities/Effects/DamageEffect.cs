@@ -14,8 +14,9 @@ namespace Abilities.Effects
         public void Apply(UnitBrain source, UnitBrain target)
         {
             //if(CritPolicy.GetOrCreate().Roll(source.Stats.CriChance)) damageAmount = damageAmount * source.Stats.Strength;
+            Debug.Log("Damage Effect Applied ");
             target.TakeDamage(damageAmount,damageType);
-            Debug.Log("Damage Effect");
+            
         }
         
         public void Cleanup()
