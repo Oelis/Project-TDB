@@ -1,67 +1,17 @@
-using Abilities;
 using Items;
-using JetBrains.Annotations;
-using Stats;
+using Units.Configs;
 
-namespace Units.Logic
+namespace Units.Brain
 {
-    public class PlayerBrain : UnitBrain
+    public class PlayerBrain : UnitBrain<PlayerBrain, PlayerConfig>
     {
-        private PlayerConfig _config;
-        
-        public PlayerBrain WithSource(Unit source)
-        {
-            this.source = source;
-            return this;
-        }
-        
-        public PlayerBrain WithAbilityManager()
-        {
-            this.abilityManager = new AbilityManager(this);
-            return this;
-        }
-        
-        public PlayerBrain WithPlayerConfig(PlayerConfig config)
-        {
-            this._config = config;
-            return this;
-        }
-
-        public PlayerBrain WithStats(Stats.Stats stats)
-        {
-            this.Stats = new Stats.Stats(new StatsMediator(), this._config);
-            return this;
-        }
-        
         public void EquipGear()
         {
-            if (!_config) return;
-            EquipArmor(this._config.Helmet,this._config.Chest,this._config.Legs);
-            EquipWeapon(this._config.Weapon);
+            if (!config) return;
+            EquipArmor(config.Helmet,config.Chest,config.Legs);
+            EquipWeapon(this.config.Weapon);
         }
         
-        
-        public void SetupAbilities()
-        {
-            if (!_config || abilityManager == null) return;
-
-            foreach (var passiveAbility in _config.passiveAbilities)
-            {
-                abilityManager.AddPassiveAbility(passiveAbility);
-            }
-            foreach (var activeAbility in _config.activeAbilities)
-            {
-                abilityManager.AddActiveAbility(activeAbility);
-            }
-        }
-
-        public PlayerBrain Build()
-        {
-            SetupAbilities();
-            EquipGear();
-            return this;
-        }
-
         private void EquipArmor(params Armor[] item)
         {
             foreach (var armor in item)
@@ -69,7 +19,7 @@ namespace Units.Logic
                 if (!armor) continue;
                 foreach (var passiveAbility in armor.PassiveAbilities)
                 {
-                    abilityManager.AddPassiveAbility(passiveAbility);
+                    AbilityController.AddPassiveAbility(passiveAbility);
                 }
             }  
         }
@@ -81,9 +31,22 @@ namespace Units.Logic
             if (!item) return;
             foreach (var passiveAbility in item.PassiveAbilities)
             {
-                abilityManager.AddPassiveAbility(passiveAbility);
+                AbilityController.AddPassiveAbility(passiveAbility);
             }
-            abilityManager.AddActiveAbility(item.activeAbility);
+            AbilityController.AddActiveAbility(item.activeAbility);
+        }
+
+        public override PlayerBrain Build()
+        {
+            SetupAbilities();
+            EquipGear();
+            return this;
+        }
+        
+        public override void Die()
+        {
+            Registry<PlayerBrain>.Remove(this);
+            base.Die();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Abilities;
-using Abilities.AbilityEffects;
+using Abilities.Effects;
 using Attributes;
 using Enums;
 

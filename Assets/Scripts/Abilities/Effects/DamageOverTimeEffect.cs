@@ -1,9 +1,8 @@
 using System;
 using Enums;
 using Interfaces;
-using Units;
 
-namespace Abilities.AbilityEffects
+namespace Abilities.Effects
 {
     [Serializable]
     public abstract class DamageOverTimeEffect :EffectOverTime, IDebuff

@@ -1,5 +1,5 @@
 using System;
-using Abilities.AbilityEffects;
+using Abilities.Effects;
 using Enums;
 
 namespace Interfaces

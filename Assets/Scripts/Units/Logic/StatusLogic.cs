@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Abilities.AbilityEffects;
+using Abilities.Effects;
 
 namespace Units.Logic
 {

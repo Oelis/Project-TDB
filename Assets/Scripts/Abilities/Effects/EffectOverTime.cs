@@ -1,9 +1,8 @@
 using System;
-using Enums;
 using Interfaces;
 using Units;
 
-namespace Abilities.AbilityEffects
+namespace Abilities.Effects
 
 {
     public abstract class EffectOverTime : IEffect

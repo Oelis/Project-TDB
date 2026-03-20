@@ -1,6 +1,6 @@
 using Enums;
 
-namespace Abilities.AbilityEffects.Debuffs.DOT
+namespace Abilities.Effects.Debuffs.DOT
 {
     public class FireDot: DamageOverTimeEffect
 

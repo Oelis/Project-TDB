@@ -1,7 +1,7 @@
 using Interfaces;
 using Units;
 
-namespace Abilities.AbilityEffects
+namespace Abilities.Effects
 {
     public class StatusEffect : IEffect
     {

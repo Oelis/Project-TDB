@@ -2,8 +2,9 @@ using System;
 using Enums;
 using Interfaces;
 using Units;
+using UnityEngine;
 
-namespace Abilities.AbilityEffects
+namespace Abilities.Effects
 {
     [Serializable]
     public class DamageEffect : IEffect
@@ -14,6 +15,7 @@ namespace Abilities.AbilityEffects
         {
             //if(CritPolicy.GetOrCreate().Roll(source.Stats.CriChance)) damageAmount = damageAmount * source.Stats.Strength;
             target.TakeDamage(damageAmount,damageType);
+            Debug.Log("Damage Effect");
         }
         
         public void Cleanup()

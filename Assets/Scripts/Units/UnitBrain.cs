@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Abilities;
-using Abilities.AbilityEffects;
+using Abilities.Effects;
 using Attributes;
 using Enums;
 using Interfaces;
+using NUnit.Framework;
+using Stats;
 using Units.Logic;
 
 namespace Units
@@ -26,7 +28,7 @@ namespace Units
         
         private readonly StatusLogic statusLogic = new StatusLogic();
         
-        protected AbilityManager abilityManager;
+        protected AbilityController AbilityController;
         
         protected Unit source;
         
@@ -48,7 +50,7 @@ namespace Units
             currentHealth += amount;
         }
 
-        public void Die()
+        public virtual void Die()
         {
             var activeDot = dotLogic.GetDamageOvertime();
             foreach (var effect in activeDot)
@@ -98,10 +100,39 @@ namespace Units
             }
         }
 
-        public void SetSource(Unit source)
+        public AbilityController GetAbilityController()
         {
-            this.source = source;
+            return AbilityController;
         }
+        
+    }
+
+    public abstract class UnitBrain<TSelf,TConfig> : UnitBrain where TSelf : UnitBrain<TSelf, TConfig> where TConfig : UnitConfig
+    {
+        protected TConfig config;
+        
+        public TSelf WithSource(Unit source) { this.source = source; return (TSelf)this; }                                                                                
+        public TSelf WithAbilityManager() { this.AbilityController = new AbilityController(this); return (TSelf)this; }                                                         
+        public TSelf WithConfig(TConfig config) { this.config = config; return (TSelf)this; }                                                                             
+        public TSelf WithStats(Stats.Stats stats) { this.Stats = new Stats.Stats(new StatsMediator(), config); return (TSelf)this; } 
+        public TSelf Clone() => (TSelf)MemberwiseClone();
+
+        public abstract TSelf Build();
+        
+        protected void SetupAbilities()
+        {
+            if (!config || AbilityController == null) return;
+
+            foreach (var passiveAbility in config.passiveAbilities)
+            {
+                AbilityController.AddPassiveAbility(passiveAbility);
+            }
+            foreach (var activeAbility in config.activeAbilities)
+            {
+                AbilityController.AddActiveAbility(activeAbility);
+            }
+        }
+        
     }
     
     

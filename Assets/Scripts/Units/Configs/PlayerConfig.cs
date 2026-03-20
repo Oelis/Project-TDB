@@ -1,7 +1,7 @@
 using Items;
 using UnityEngine;
 
-namespace Units
+namespace Units.Configs
 {
     [CreateAssetMenu(fileName = "PlayerConfig", menuName = "Unit/PlayerConfig")]
     public class PlayerConfig : UnitConfig

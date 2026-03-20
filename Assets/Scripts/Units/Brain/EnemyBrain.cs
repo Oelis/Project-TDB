@@ -1,58 +1,21 @@
 using System;
-using Abilities;
-using Interfaces;
-using Stats;
+using Units.Configs;
 
-namespace Units.Logic
+namespace Units.Brain
 {
     [Serializable]
-    public abstract class EnemyBrain : UnitBrain
+    public class EnemyBrain : UnitBrain<EnemyBrain,EnemyConfig>
     {
-        private EnemyConfig _config;
-        
-        public EnemyBrain WithSource(Unit source)
-        {
-            this.source = source;
-            return this;
-        }
-        
-        public EnemyBrain WithAbilityManager()
-        {
-            this.abilityManager = new AbilityManager(this);
-            return this;
-        }
-
-        public EnemyBrain WithConfig(EnemyConfig config)
-        {
-            _config = config;
-            return this;
-        }
-        
-        public EnemyBrain WithStats(Stats.Stats stats)
-        {
-            this.Stats = new Stats.Stats(new StatsMediator(), this._config);
-            return this;
-        }
-        
-        public void SetupAbilities()
-        {
-            if (!_config || abilityManager == null) return;
-
-            foreach (var passiveAbility in _config.passiveAbilities)
-            {
-                abilityManager.AddPassiveAbility(passiveAbility);
-            }
-            foreach (var activeAbility in _config.activeAbilities)
-            {
-                abilityManager.AddActiveAbility(activeAbility);
-            }
-        }
-        
-        public EnemyBrain Build()
+        public override EnemyBrain Build()
         {
             SetupAbilities();
             return this;
         }
-        public EnemyBrain Clone() => (EnemyBrain)MemberwiseClone(); 
+
+        public override void Die()
+        {
+            Registry<EnemyBrain>.Remove(this);
+            base.Die();
+        }
     }
 }

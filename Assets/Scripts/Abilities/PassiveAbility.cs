@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Abilities
 {
-    [CreateAssetMenu(fileName = "PassiveAbility", menuName = "Spell/PassiveAbility")]
+    [CreateAssetMenu(fileName = "PassiveAbility", menuName = "Ability/PassiveAbility")]
     public class PassiveAbility : Ability
     {
     

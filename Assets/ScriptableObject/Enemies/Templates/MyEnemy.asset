@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: MyEnemy
   m_EditorClassIdentifier: Assembly-CSharp::Units.Template.EnemyTemplate
   enemyBrain:
-    rid: 8745054108885188676
+    rid: 8745054160866246853
   enemyConfig: {fileID: 11400000, guid: a11577af648f044a59fd1ba17c397b64, type: 2}
   model: {fileID: 7058121152221351574, guid: 3e76b9a9c801848baade4ded119ee452, type: 3}
   references:
     version: 2
     RefIds:
-    - rid: 8745054108885188676
-      type: {class: SkeletonBrain, ns: Units.Logic, asm: Assembly-CSharp}
+    - rid: 8745054160866246853
+      type: {class: SkeletonBrain, ns: Units.Brain, asm: Assembly-CSharp}
       data: 
