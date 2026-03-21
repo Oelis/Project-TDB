@@ -1,4 +1,5 @@
 using System;
+using Units;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,7 +12,18 @@ namespace DefaultNamespace
         private void OnEnable()
         {
             mouseClickAction.Enable();
-            mouseClickAction.performed += ctx => Debug.Log("Mouse Clicked");
+            mouseClickAction.performed += Select;
+        }
+
+        private void OnDisable()
+        {
+            mouseClickAction.Disable();
+            mouseClickAction.performed -= Select;
+        }
+
+        private void Select(InputAction.CallbackContext callbackContext)
+        {
+            Debug.Log("Selecting Unit");
         }
     }
 }

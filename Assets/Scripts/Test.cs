@@ -19,12 +19,10 @@ public class Test : MonoBehaviour
 
     private void Start()
     {
-        spawner.SetEncounters(encounters);
-        spawner.SpawnEnemies();
+        spawner.SpawnEnemies(encounters);
         
         playerSquad.AddPlayer(PlayerTemplate);
-        spawner.SetPlayerSquad(playerSquad);
-        spawner.SpawnPlayers();
+        spawner.SpawnPlayers(playerSquad);
 
         var player = Registry<PlayerBrain>.GetFirst();
         var enemy = Registry<EnemyBrain>.GetFirst();

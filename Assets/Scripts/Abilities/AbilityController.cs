@@ -17,11 +17,14 @@ namespace Abilities
             this.source = source;
             Debug.Log($"Ability Controller Created for {source.GetType().Name}");
         }
-        public void CastAbility(ActiveAbility abilityToCast, UnitBrain target)
+        public void CastAbility(ActiveAbility abilityToCast, params UnitBrain[] targets)
         {
-            foreach (IEffect abilityEffect in abilityToCast.effects)
+            foreach (UnitBrain target in targets)
             {
-                abilityEffect.Apply(source,target);
+                foreach (IEffect abilityEffect in abilityToCast.effects)
+                {
+                    abilityEffect.Apply(source,target);
+                }
             }
         }
 

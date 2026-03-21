@@ -6,20 +6,20 @@ namespace Units.Template
     [CreateAssetMenu(fileName = "PlayerSquad", menuName = "Unit/PlayerSquad")]
     public class PlayerSquad : ScriptableObject
     {
-        public readonly PlayerTemplate[] playerSquad = new PlayerTemplate[4];
+        public readonly PlayerTemplate[] Squad = new PlayerTemplate[4];
 
-        public bool IsFull() => Array.TrueForAll(playerSquad, p => p);
+        public bool IsFull() => Array.TrueForAll(Squad, p => p);
 
         public void AddPlayer(PlayerTemplate player)
         {
             if (IsFull()) return;
 
-            for (int i = 0; i < playerSquad.Length; i++)
+            for (int i = 0; i < Squad.Length; i++)
             {
-                if (!playerSquad[i])
+                if (!Squad[i])
                 {
-                    playerSquad[i] = player;
-                    Debug.Log($"[PlayerSquad] {string.Join(", ", Array.ConvertAll(playerSquad, p => p ? p.name : "empty"))}");
+                    Squad[i] = player;
+                    Debug.Log($"[PlayerSquad] {string.Join(", ", Array.ConvertAll(Squad, p => p ? p.name : "empty"))}");
                     return;
                 }
             }
@@ -29,7 +29,7 @@ namespace Units.Template
 
         public void ClearPlayerSquad()
         {
-            Array.Clear(playerSquad, 0, playerSquad.Length);
+            Array.Clear(Squad, 0, Squad.Length);
         }
         
         

@@ -13,9 +13,9 @@ namespace Units.Factory
 {
     public class UnitFactory 
     {
-        public GameObject CreateEnemy(EnemyTemplate template)
+        public GameObject CreateEnemy(EnemyTemplate template, Vector3 position, Quaternion rotation)
         {
-            var instance = Object.Instantiate(template.model);
+            var instance = Object.Instantiate(template.model, position, rotation);
             var unit = instance.GetComponent<Unit>();
             var brainType = template.enemyBrain.GetType();
             var brain = (EnemyBrain)Activator.CreateInstance(brainType);
@@ -30,9 +30,9 @@ namespace Units.Factory
             
         }
 
-        public GameObject CreatePlayer(PlayerTemplate template)
+        public GameObject CreatePlayer(PlayerTemplate template, Vector3 position, Quaternion rotation)
         {
-            var instance = Object.Instantiate(template.model);
+            var instance = Object.Instantiate(template.model, position, rotation);
             var unit = instance.GetComponent<Unit>();
             var brain = (PlayerBrain)Activator.CreateInstance(template.playerBrain.GetType()); 
             brain.WithSource(unit).

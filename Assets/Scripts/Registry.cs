@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
-
+using ZLinq;
 public delegate T SelectionStrategy<T>(IEnumerable<T> items);
 
 public static class Registry<T> where T : class
@@ -19,7 +18,7 @@ public static class Registry<T> where T : class
 
     public static T GetFirst()
     {
-        return items.FirstOrDefault();
+        return items.AsValueEnumerable().FirstOrDefault();
     }
 
     public static T Get(SelectionStrategy<T> strategy) => strategy(items);
