@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Abilities;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Units
@@ -26,7 +27,9 @@ namespace Units
         public int poisonResist = 10;
         public int lightningResist = 10;
     
+        [TableList]
         public List<ActiveAbility> activeAbilities;
+        [TableList]
         public List<PassiveAbility> passiveAbilities;
     }
 }

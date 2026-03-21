@@ -17,9 +17,15 @@ namespace Units
     public class Unit : MonoBehaviour 
     {
         private UnitBrain _Brain;
+
+        private void Awake()
+        {
+            Registry<Unit>.TryAdd(this);
+        }
         
         public void Kill()
         {
+            Registry<Unit>.Remove(this);
             Destroy(gameObject);
         }
         

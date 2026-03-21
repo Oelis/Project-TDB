@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Units;
 using Units.Brain;
@@ -14,6 +15,7 @@ public class Test : MonoBehaviour
     [Required] public PlayerTemplate PlayerTemplate;
     
     [Required] public PlayerSquad playerSquad;
+    
 
     private void Start()
     {
@@ -30,6 +32,6 @@ public class Test : MonoBehaviour
         var ability = player.GetAbilityController().GetAbility(0);
         
         player.GetAbilityController().CastAbility(ability,enemy);
-
+        
     }
 }

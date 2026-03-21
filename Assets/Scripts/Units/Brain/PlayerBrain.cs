@@ -42,7 +42,7 @@ namespace Units.Brain
             EquipGear();
             return this;
         }
-        
+
         public override void Die()
         {
             Registry<PlayerBrain>.Remove(this);

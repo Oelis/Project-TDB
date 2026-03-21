@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Bleed
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.PassiveAbility
   abilityName: Bleed
-  description: 
-  icon: {fileID: 0}
+  description: Bleed passif
+  icon: {fileID: 2800000, guid: deac5c834fa1c884e9b30f54f489bc3f, type: 3}
   effects:
-  - rid: 8745054143206654164
+  - rid: 8745054166815080637
   references:
     version: 2
     RefIds:
-    - rid: 8745054143206654164
-      type: {class: BleedDot, ns: Abilities.AbilityEffects.Debuffs.DOT, asm: Assembly-CSharp}
+    - rid: 8745054166815080637
+      type: {class: BleedDot, ns: Abilities.Effects.Debuffs.DOT, asm: Assembly-CSharp}
       data:
-        MaxStackSize: 5
+        MaxStackSize: 1
         CanBeCleanse: 1
-        damagePerTurn: 5
+        damagePerTurn: 0

@@ -25,7 +25,7 @@ namespace Units.Factory
                 WithStats(new Stats.Stats(new StatsMediator(),template.enemyConfig)).
                 Build();
             unit.SetBrain(brain);
-            Registry<EnemyBrain>.TryAdd(brain);    
+            Registry<EnemyBrain>.TryAdd(brain);
             return instance;
             
         }
@@ -41,7 +41,7 @@ namespace Units.Factory
                 WithStats(new Stats.Stats(new StatsMediator(), template.playerConfig)).
                 Build();
             unit.SetBrain(brain);
-            Registry<PlayerBrain>.TryAdd(brain);    
+            Registry<PlayerBrain>.TryAdd(brain);
             return instance;
         }
 
