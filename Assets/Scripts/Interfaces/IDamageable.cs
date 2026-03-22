@@ -12,7 +12,7 @@ namespace Interfaces
 
         void Die();
 
-        void ApplyEffect(EffectOverTime effect);
+        bool ApplyEffect(EffectOverTime effect);
         
         void RemoveEffect(EffectOverTime effect);
 

@@ -36,6 +36,18 @@ namespace Units
         public Stats.Stats Stats {get; protected set; } 
         
         private float currentHealth;
+
+        public virtual void StartTurn()
+        {
+            Debug.Log($"[{GetType().Name}] ({source.name}) turn started.");
+            OnTurnStart?.Invoke();
+        }
+        
+        public virtual void EndTurn()
+        {
+            Debug.Log($"[{GetType().Name}] ({source.name}) ended turn.");
+            OnTurnEnd?.Invoke();
+        }
         
         public virtual void TakeDamage(float damage, DamageType damageType)
         {
@@ -43,7 +55,7 @@ namespace Units
             // Check if evaded
             // Check if blocked
             // Calculate final damage output
-            Debug.Log("Damage Taken");
+            Debug.Log($"[{GetType().Name}] ({source.name}) took {damage} {damageType} damage. HP: {currentHealth} -> {currentHealth - damage}");
             currentHealth -= damage;
         }
 
@@ -70,9 +82,9 @@ namespace Units
             source.Kill();
         }
         
-        public void ApplyEffect(EffectOverTime effect)
+        public bool ApplyEffect(EffectOverTime effect)
         {
-            if(immunityLogic.BlockEffect(effect)) return;
+            if(immunityLogic.BlockEffect(effect)) return false;
             
             effect.OnCompleted += RemoveEffect;
             
@@ -85,12 +97,13 @@ namespace Units
                     dotLogic.AddDamageOvertime(damageOverTime);
                     break;
             }
+
+            return true;
         }
         
         public void RemoveEffect(EffectOverTime effect)
         {
             effect.OnCompleted -= RemoveEffect;
-
             switch (effect)
             {
                 case ImmunityEffect immunity:
@@ -100,6 +113,7 @@ namespace Units
                     dotLogic.RemoveDamageOvertime(damageOverTime);
                     break;
             }
+            Debug.Log($"[{GetType().Name}] ({source.name}) removed effect: {effect.GetType().Name}");
         }
 
         public AbilityController GetAbilityController()

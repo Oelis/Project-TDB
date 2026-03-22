@@ -4,6 +4,7 @@ using Units;
 using Units.Brain;
 using Units.Template;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Utils;
 
 public class Test : MonoBehaviour
@@ -21,7 +22,7 @@ public class Test : MonoBehaviour
     {
         spawner.SpawnEnemies(encounters);
         
-        playerSquad.AddPlayer(PlayerTemplate);
+        playerSquad.AddPlayer(PlayerTemplate,4);
         spawner.SpawnPlayers(playerSquad);
 
         var player = Registry<PlayerBrain>.GetFirst();
@@ -31,5 +32,19 @@ public class Test : MonoBehaviour
         
         player.GetAbilityController().CastAbility(ability,enemy);
         
+    }
+
+    private void Update()
+    {
+        if(Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            var enemy = Registry<EnemyBrain>.GetFirst();
+            var player = Registry<PlayerBrain>.GetFirst();
+            player.StartTurn();
+            enemy.StartTurn();
+            
+            player.EndTurn();
+            enemy.EndTurn();
+        }
     }
 }

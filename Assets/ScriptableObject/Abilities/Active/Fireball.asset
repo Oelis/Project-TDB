@@ -17,6 +17,8 @@ MonoBehaviour:
   icon: {fileID: 0}
   effects:
   - rid: 8745054163123830973
+  - rid: 8745054184283308223
+  - rid: 8745054184283308222
   references:
     version: 2
     RefIds:
@@ -25,3 +27,16 @@ MonoBehaviour:
       data:
         damageAmount: 10
         damageType: 0
+    - rid: 8745054184283308222
+      type: {class: FireDot, ns: Abilities.Effects.Debuffs.DOT, asm: Assembly-CSharp}
+      data:
+        _turnDuration: 2
+        MaxStackSize: 1
+        CanBeCleanse: 1
+        damagePerTurn: 23
+    - rid: 8745054184283308223
+      type: {class: FireImmunity, ns: Abilities.Effects.Buffs.Immunity, asm: Assembly-CSharp}
+      data:
+        _turnDuration: 0
+        MaxStackSize: 1
+        CanBeCleanse: 1

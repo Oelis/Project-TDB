@@ -23,6 +23,7 @@ MonoBehaviour:
     - rid: 8745054166815080637
       type: {class: BleedDot, ns: Abilities.Effects.Debuffs.DOT, asm: Assembly-CSharp}
       data:
+        _turnDuration: 10
         MaxStackSize: 1
         CanBeCleanse: 1
-        damagePerTurn: 0
+        damagePerTurn: 10

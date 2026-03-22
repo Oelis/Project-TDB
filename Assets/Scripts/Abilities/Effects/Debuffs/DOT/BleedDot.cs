@@ -1,7 +1,9 @@
+using System;
 using Enums;
 
 namespace Abilities.Effects.Debuffs.DOT
 {
+    [Serializable]
     public class BleedDot: DamageOverTimeEffect
 
     {

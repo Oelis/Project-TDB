@@ -6,9 +6,7 @@ namespace Units.Template
     [CreateAssetMenu(fileName = "Encounters", menuName = "Unit/Encounters")]
     public class EncountersTemplate : ScriptableObject
     {
-        
         [MinValue(1)] private int columns = 2;
-
         
         [MinValue(1)] private int rows = 5;
 

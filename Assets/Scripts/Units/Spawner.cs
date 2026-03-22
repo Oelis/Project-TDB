@@ -27,12 +27,11 @@ namespace Units
 
         public void SpawnPlayers(PlayerSquad playerSquad)
         {
-            int index = 1;
-            foreach (var playerTemplate in playerSquad.Squad)
+            for (int i = 0; i < playerSquad.Squad.Length; i++)
             {
-                if (!playerTemplate) continue;
-                _factory.CreatePlayer(playerTemplate, playerGrid.GetTilePosition(index), playerGrid.GetTileRotation());
-                index++;
+                var template = playerSquad.Squad[i];
+                if (!template) continue;
+                _factory.CreatePlayer(template, playerGrid.GetTilePosition(i), playerGrid.GetTileRotation());
             }
         }
 
