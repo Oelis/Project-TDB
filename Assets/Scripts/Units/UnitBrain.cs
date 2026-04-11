@@ -30,8 +30,10 @@ namespace Units
         private readonly StatusLogic statusLogic = new StatusLogic();
         
         protected AbilityController AbilityController;
-        
+
         protected Unit source;
+
+        private bool _isFirstTurn = true;
         
         public Stats.Stats Stats {get; protected set; } 
         
@@ -39,8 +41,13 @@ namespace Units
 
         public virtual void StartTurn()
         {
-            Debug.Log($"[{GetType().Name}] ({source.name}) turn started.");
+            Debug.Log($"{source.name} turn started.");
             OnTurnStart?.Invoke();
+            if (_isFirstTurn)
+            {
+                _isFirstTurn = false;
+                AbilityController?.CastPassiveAbilities();
+            }
         }
         
         public virtual void EndTurn()
@@ -55,7 +62,7 @@ namespace Units
             // Check if evaded
             // Check if blocked
             // Calculate final damage output
-            Debug.Log($"[{GetType().Name}] ({source.name}) took {damage} {damageType} damage. HP: {currentHealth} -> {currentHealth - damage}");
+            Debug.Log($"{source.name} took {damage} {damageType} damage. HP: {currentHealth} -> {currentHealth - damage}");
             currentHealth -= damage;
         }
 
@@ -119,6 +126,11 @@ namespace Units
         public AbilityController GetAbilityController()
         {
             return AbilityController;
+        }
+
+        public Unit GetSource()
+        {
+            return source;
         }
         
     }

@@ -29,7 +29,11 @@ namespace Abilities.Commands
         }
 
         public AbilityCommandBuilder AddEntry(EffectEntry entry)
-            => AddEffect(entry.effect, entry.targeting);
+        {
+            if (entry.targeting is ICasterTargetingStrategy casterTargeting)
+                return AddEffect(entry.effect, casterTargeting);
+            return AddEffect(entry.effect, entry.targeting);
+        }
 
         public List<AbilityCommand> Build() => _commands;
     }

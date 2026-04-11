@@ -1,5 +1,6 @@
 using System;
 using Interfaces;
+using Sirenix.OdinInspector;
 using Units;
 using UnityEngine;
 
@@ -8,7 +9,9 @@ namespace Abilities.Effects
 {
     public abstract class EffectOverTime : IEffect
     {
+        [MinValue(-1), ValidateInput(nameof(IsValidDuration), "Turn duration cannot be 0.")]
         public int _turnDuration = 1;
+        private bool IsValidDuration(int value) => value != 0;
         public int MaxStackSize = 1;
         public bool CanBeCleanse = true;
         public abstract bool CanBeStacked { get; }
@@ -19,6 +22,7 @@ namespace Abilities.Effects
         public virtual void Apply(UnitBrain source, UnitBrain target)
         {
             if (!target.ApplyEffect(this))
+                
             {
                 Debug.Log($"[{GetType().Name}] could not be applied to {target.GetType().Name}");
                 return;
@@ -26,7 +30,7 @@ namespace Abilities.Effects
             CurrentTarget = target;
             target.OnTurnStart += Tick;
             target.OnTurnEnd += CountDown;
-            Debug.Log($"[{GetType().Name}] applied to {target.GetType().Name}");
+            Debug.Log($"[{GetType().Name}] applied to {target.GetSource().name}");
         }
 
         public virtual void Cleanup()

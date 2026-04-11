@@ -39,7 +39,7 @@ MonoBehaviour:
       Data: 10
     - Name: damageType
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -57,13 +57,19 @@ MonoBehaviour:
       Data: 4|Abilities.EffectEntry, Assembly-CSharp
     - Name: effect
       Entry: 7
-      Data: 5|Abilities.Effects.DamageEffect, Assembly-CSharp
-    - Name: damageAmount
-      Entry: 3
-      Data: 10
-    - Name: damageType
+      Data: 5|Abilities.Effects.Debuffs.DOT.FireDot, Assembly-CSharp
+    - Name: _turnDuration
       Entry: 3
       Data: 1
+    - Name: MaxStackSize
+      Entry: 3
+      Data: 1
+    - Name: CanBeCleanse
+      Entry: 5
+      Data: true
+    - Name: damagePerTurn
+      Entry: 3
+      Data: 5
     - Name: 
       Entry: 8
       Data: 

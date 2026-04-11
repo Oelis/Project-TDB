@@ -12,18 +12,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e6c89bbf8346ac99814805cc2e53d3, type: 3}
   m_Name: Bleed
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.PassiveAbility
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: effectEntries
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Abilities.EffectEntry, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 1|Abilities.EffectEntry, Assembly-CSharp
+    - Name: effect
+      Entry: 7
+      Data: 2|Abilities.Effects.Debuffs.DOT.BleedDot, Assembly-CSharp
+    - Name: _turnDuration
+      Entry: 3
+      Data: 1
+    - Name: MaxStackSize
+      Entry: 3
+      Data: 1
+    - Name: CanBeCleanse
+      Entry: 5
+      Data: true
+    - Name: damagePerTurn
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targeting
+      Entry: 7
+      Data: 3|Abilities.Targeting.SelfTargeting, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   abilityName: Bleed
   description: Bleed passif
   icon: {fileID: 2800000, guid: deac5c834fa1c884e9b30f54f489bc3f, type: 3}
-  effects:
-  - rid: 8745054166815080637
-  references:
-    version: 2
-    RefIds:
-    - rid: 8745054166815080637
-      type: {class: BleedDot, ns: Abilities.Effects.Debuffs.DOT, asm: Assembly-CSharp}
-      data:
-        _turnDuration: 10
-        MaxStackSize: 1
-        CanBeCleanse: 1
-        damagePerTurn: 10

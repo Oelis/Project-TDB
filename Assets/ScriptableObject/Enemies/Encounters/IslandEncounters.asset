@@ -12,5 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45aeab583cef45a6a2d81bf15c7656ad, type: 3}
   m_Name: IslandEncounters
   m_EditorClassIdentifier: Assembly-CSharp::Units.Template.EncountersTemplate
-  enemies:
+  slots:
+  - {fileID: 0}
   - {fileID: 11400000, guid: 0919015871cf44643957225c91b364c6, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
