@@ -12,31 +12,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a21f92232c41baab900425a033d0b1, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: Assembly-CSharp::Abilities.ActiveAbility
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: effectEntries
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Abilities.EffectEntry, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 1|Abilities.EffectEntry, Assembly-CSharp
+    - Name: effect
+      Entry: 7
+      Data: 2|Abilities.Effects.DamageEffect, Assembly-CSharp
+    - Name: damageAmount
+      Entry: 3
+      Data: 10
+    - Name: damageType
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targeting
+      Entry: 7
+      Data: 3|Abilities.Targeting.AllEnemiesTargeting, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Abilities.EffectEntry, Assembly-CSharp
+    - Name: effect
+      Entry: 7
+      Data: 5|Abilities.Effects.DamageEffect, Assembly-CSharp
+    - Name: damageAmount
+      Entry: 3
+      Data: 10
+    - Name: damageType
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: targeting
+      Entry: 7
+      Data: 6|Abilities.Targeting.RandomEnemyTargeting, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   abilityName: Fireball
-  description: 
-  icon: {fileID: 0}
-  effects:
-  - rid: 8745054163123830973
-  - rid: 986349302737797198
-  - rid: 8745054184283308222
-  references:
-    version: 2
-    RefIds:
-    - rid: 986349302737797198
-      type: {class: FireImmunity, ns: Abilities.Effects.Buffs.Immunity, asm: Assembly-CSharp}
-      data:
-        _turnDuration: 1
-        MaxStackSize: 1
-        CanBeCleanse: 1
-    - rid: 8745054163123830973
-      type: {class: DamageEffect, ns: Abilities.Effects, asm: Assembly-CSharp}
-      data:
-        damageAmount: 10
-        damageType: 0
-    - rid: 8745054184283308222
-      type: {class: FireDot, ns: Abilities.Effects.Debuffs.DOT, asm: Assembly-CSharp}
-      data:
-        _turnDuration: 0
-        MaxStackSize: 1
-        CanBeCleanse: 1
-        damagePerTurn: 23
+  description: Launch a fireball
+  icon: {fileID: 2800000, guid: b1fb2efe9ab37d04ab4c45368fc088d2, type: 3}

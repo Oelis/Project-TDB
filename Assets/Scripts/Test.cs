@@ -30,7 +30,7 @@ public class Test : MonoBehaviour
         
         var ability = player.GetAbilityController().GetAbility(0);
         
-        player.GetAbilityController().CastAbility(ability,enemy);
+        //player.GetAbilityController().CastAbility(ability,enemy);
         
     }
 

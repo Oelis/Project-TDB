@@ -1,20 +1,23 @@
 using System.Collections.Generic;
-using Interfaces;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 
 namespace Abilities
 {
-    public abstract class Ability : ScriptableObject
+    public abstract class Ability : SerializedScriptableObject
     {
         [Required] public string abilityName;
-    
+
         [Required] public string description;
-    
+
         [Required] public Texture icon;
-    
-        [SerializeReference,Required] public List<IEffect> effects = new();
+
+        [OdinSerialize, HideReferenceObjectPicker, ListDrawerSettings(ListElementLabelName = nameof(EffectEntry.Label), CustomAddFunction = nameof(AddEffectEntry))]
+        public List<EffectEntry> effectEntries = new();
+
+        private EffectEntry AddEffectEntry() => new EffectEntry();
 
         private void OnEnable()
         {
