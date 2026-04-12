@@ -7,7 +7,8 @@ using UnityEngine;
 namespace Abilities.Effects
 
 {
-    public abstract class EffectOverTime : IEffect
+    [Serializable]
+public abstract class EffectOverTime : IEffect
     {
         [MinValue(-1), ValidateInput(nameof(IsValidDuration), "Turn duration cannot be 0.")]
         public int _turnDuration = 1;

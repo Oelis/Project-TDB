@@ -153,11 +153,11 @@ namespace Units
 
             foreach (var passiveAbility in config.passiveAbilities)
             {
-                AbilityController.AddPassiveAbility(passiveAbility);
+                AbilityController.AddPassiveAbility(UnityEngine.Object.Instantiate(passiveAbility));
             }
             foreach (var activeAbility in config.activeAbilities)
             {
-                AbilityController.AddActiveAbility(activeAbility);
+                AbilityController.AddActiveAbility(UnityEngine.Object.Instantiate(activeAbility));
             }
         }
         
