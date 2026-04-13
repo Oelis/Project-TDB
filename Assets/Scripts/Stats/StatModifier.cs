@@ -8,7 +8,7 @@ namespace Stats
         private readonly StatType _type;
         private readonly Func<object, object> _operation;
         
-        // Generic constructor (most flexible)
+        
         public BasicStatModifier(StatType type, int turnDuration, Func<object, object> operation) : base(turnDuration)
         {
             this._type = type;

@@ -1,12 +1,11 @@
 using System;
 using Abilities.Effects;
-using Enums;
 
 namespace Interfaces
 {
     public interface IDamageable
     {
-        void TakeDamage(float damage, DamageType type);
+        void TakeDamage(float damage, Type sourceEffectType);
         
         void Heal(float amount);
 

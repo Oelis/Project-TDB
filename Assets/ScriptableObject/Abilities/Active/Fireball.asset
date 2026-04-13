@@ -33,13 +33,10 @@ MonoBehaviour:
       Data: 1|Abilities.EffectEntry, Assembly-CSharp
     - Name: effect
       Entry: 7
-      Data: 2|Abilities.Effects.DamageEffect, Assembly-CSharp
+      Data: 2|Abilities.Effects.DirectDamage.FireDirectDamage, Assembly-CSharp
     - Name: damageAmount
       Entry: 3
       Data: 10
-    - Name: damageType
-      Entry: 3
-      Data: 2
     - Name: 
       Entry: 8
       Data: 

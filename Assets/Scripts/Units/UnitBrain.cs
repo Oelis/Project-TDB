@@ -56,13 +56,13 @@ namespace Units
             OnTurnEnd?.Invoke();
         }
         
-        public virtual void TakeDamage(float damage, DamageType damageType)
+        public virtual void TakeDamage(float damage, Type sourceEffectType)
         {
-            if (immunityLogic.IsDamageImmuneTo(damageType)) return;
+            if (immunityLogic.IsImmuneToEffectType(sourceEffectType)) return;
             // Check if evaded
             // Check if blocked
             // Calculate final damage output
-            Debug.Log($"{source.name} took {damage} {damageType} damage. HP: {currentHealth} -> {currentHealth - damage}");
+            Debug.Log($"{source.name} took {damage} {sourceEffectType.Name} damage. HP: {currentHealth} -> {currentHealth - damage}");
             currentHealth -= damage;
         }
 
@@ -91,7 +91,7 @@ namespace Units
         
         public bool ApplyEffect(EffectOverTime effect)
         {
-            if(immunityLogic.BlockEffect(effect)) return false;
+            if(immunityLogic.IsImmuneToEffectType(effect.GetType())) return false;
             
             effect.OnCompleted += RemoveEffect;
             

@@ -1,12 +1,12 @@
 using Abilities.Effects.Debuffs.DOT;
+using Abilities.Effects.DirectDamage;
 using Attributes;
-using Enums;
 using Interfaces;
 
 namespace Abilities.Effects.Buffs.Immunity
 {
-    [Immunity (typeof(LighningDot))]
-    [Immunity (DamageType.LightningDamage)]
+    [Immunity(typeof(LighningDot))]
+    [Immunity(typeof(LightningDirectDamage))]
     public class LightningImmunity : ImmunityEffect, IBuff
     {
     }

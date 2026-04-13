@@ -7,15 +7,15 @@ using UnityEngine;
 namespace Abilities.Effects
 {
     [Serializable]
-    public class DamageEffect : IEffect
+    public abstract class DirectDamageEffect : IEffect
     {
         public int damageAmount = 10;
-        public DamageType damageType;
+        
         public void Apply(UnitBrain source, UnitBrain target)
         {
             //if(CritPolicy.GetOrCreate().Roll(source.Stats.CriChance)) damageAmount = damageAmount * source.Stats.Strength;
-            Debug.Log($"[DamageEffect] {source.GetSource().name} attacked {target.GetSource().name} for {damageAmount} {damageType} damage.");
-            target.TakeDamage(damageAmount, damageType);
+            Debug.Log($"[DamageEffect] {source.GetSource().name} attacked {target.GetSource().name} for {damageAmount} {GetType()} damage.");
+            target.TakeDamage(damageAmount, GetType());
             
         }
         

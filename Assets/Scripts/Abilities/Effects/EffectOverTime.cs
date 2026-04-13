@@ -8,7 +8,7 @@ namespace Abilities.Effects
 
 {
     [Serializable]
-public abstract class EffectOverTime : IEffect
+    public abstract class EffectOverTime : IEffect
     {
         [MinValue(-1), ValidateInput(nameof(IsValidDuration), "Turn duration cannot be 0.")]
         public int _turnDuration = 1;
@@ -23,7 +23,6 @@ public abstract class EffectOverTime : IEffect
         public virtual void Apply(UnitBrain source, UnitBrain target)
         {
             if (!target.ApplyEffect(this))
-                
             {
                 Debug.Log($"[{GetType().Name}] could not be applied to {target.GetType().Name}");
                 return;
@@ -45,7 +44,6 @@ public abstract class EffectOverTime : IEffect
         
         private void CountDown()
         {
-            
             switch (_turnDuration)
             {
                 case -1:

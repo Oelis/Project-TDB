@@ -418,21 +418,16 @@ public class ImmunitySnapshot
     [HorizontalGroup("Row"), ReadOnly, LabelWidth(140), GUIColor(0.4f, 0.9f, 1f)] public string EffectType;
     [HorizontalGroup("Row"), ReadOnly, LabelWidth(140), Tooltip("-1 = infinite")] public int TurnsRemaining;
 
-    [ReadOnly, LabelText("Immune to Effects")]
+    [ReadOnly, LabelText("Immune to")]
     [ListDrawerSettings(IsReadOnly = true, ShowFoldout = false)]
     public List<string> ImmuneToEffects = new List<string>();
 
-    [ReadOnly, LabelText("Immune to Damage Types")]
-    [ListDrawerSettings(IsReadOnly = true, ShowFoldout = false)]
-    public List<string> ImmuneToDamageTypes = new List<string>();
-
     public ImmunitySnapshot(ImmunityEffect effect)
     {
-        var type            = effect.GetType();
-        EffectType          = FormatTypeName(type.Name);
-        TurnsRemaining      = effect._turnDuration;
-        ImmuneToEffects     = ImmunityLogic.GetTypeImmunityInfo(type)?.Select(t => t.Name).ToList()             ?? new List<string>();
-        ImmuneToDamageTypes = ImmunityLogic.GetDamageTypeImmunityInfo(type)?.Select(d => d.ToString()).ToList() ?? new List<string>();
+        var type       = effect.GetType();
+        EffectType     = FormatTypeName(type.Name);
+        TurnsRemaining = effect._turnDuration;
+        ImmuneToEffects = ImmunityLogic.GetTypeImmunityInfo(type)?.Select(t => FormatTypeName(t.Name)).ToList() ?? new List<string>();
     }
 
     private static string FormatTypeName(string raw) =>

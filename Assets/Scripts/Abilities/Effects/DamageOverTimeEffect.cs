@@ -15,7 +15,7 @@ namespace Abilities.Effects
         public override void Tick()
         {
             Debug.Log($"[{GetType().Name}] has Tick");
-            CurrentTarget.TakeDamage(damagePerTurn, DamageType);
+            CurrentTarget.TakeDamage(damagePerTurn, GetType());
         }
         
         
