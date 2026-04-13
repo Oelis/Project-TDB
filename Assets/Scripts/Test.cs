@@ -20,7 +20,7 @@ public class Test : MonoBehaviour
 
     private void Start()
     {
-        spawner.SpawnEnemies(encounters);
+        spawner.SpawnEnemies(Instantiate(encounters));
         
         playerSquad.AddPlayer(PlayerTemplate,4);
         spawner.SpawnPlayers(playerSquad);
