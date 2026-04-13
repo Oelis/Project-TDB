@@ -10,12 +10,12 @@ namespace Abilities.Effects
     {
         public int damagePerTurn;
         
-        public abstract DamageType DamageType { get; }
+        public abstract StatType ResistanceStat { get; }   
         
         public override void Tick()
         {
             Debug.Log($"[{GetType().Name}] has Tick");
-            CurrentTarget.TakeDamage(damagePerTurn, GetType());
+            CurrentTarget.TakeDamage(damagePerTurn, GetType(),ResistanceStat);
         }
         
         

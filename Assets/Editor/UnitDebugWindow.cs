@@ -391,7 +391,6 @@ public class AbilitySnapshot
 public class DotSnapshot
 {
     [HorizontalGroup("Row"), ReadOnly, LabelWidth(110), GUIColor(1f, 0.5f, 0.3f)] public string EffectType;
-    [HorizontalGroup("Row"), ReadOnly, LabelWidth(110)] public DamageType DamageType;
     [HorizontalGroup("Row"), ReadOnly, LabelWidth(110)] public int DamagePerTurn;
     [HorizontalGroup("Row"), ReadOnly, LabelWidth(110), Tooltip("-1 = infinite")] public int TurnsRemaining;
     [HorizontalGroup("Row"), ReadOnly, LabelWidth(110)] public bool CanBeCleansed;
@@ -399,7 +398,6 @@ public class DotSnapshot
     public DotSnapshot(DamageOverTimeEffect effect)
     {
         EffectType     = FormatTypeName(effect.GetType().Name);
-        DamageType     = effect.DamageType;
         DamagePerTurn  = effect.damagePerTurn;
         TurnsRemaining = effect._turnDuration;
         CanBeCleansed  = effect.CanBeCleanse;

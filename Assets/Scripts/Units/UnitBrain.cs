@@ -56,12 +56,15 @@ namespace Units
             OnTurnEnd?.Invoke();
         }
         
-        public virtual void TakeDamage(float damage, Type sourceEffectType)
+        public virtual void TakeDamage(float damage, Type sourceEffectType, StatType ResistanceType)
         {
             if (immunityLogic.IsImmuneToEffectType(sourceEffectType)) return;
             // Check if evaded
             // Check if blocked
             // Calculate final damage output
+            //var resistQuery = QueryFactory.Create(resistanceStat, 0f);
+            //Stats.Mediator.PerformQuery(this, resistQuery);
+            //float finalDamage = damage * (1f - resistQuery.Value); // or however you model resistance
             Debug.Log($"{source.name} took {damage} {sourceEffectType.Name} damage. HP: {currentHealth} -> {currentHealth - damage}");
             currentHealth -= damage;
         }
