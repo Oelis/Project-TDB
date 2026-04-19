@@ -16,16 +16,17 @@ namespace Units
         public int constitution = 10;
         public int speed = 10;
 
-        public float criticalChance = 0.15f;
-        public float criticalDamageMultiplier = 1.5f;
-        public float evadeRate = 0.15f;
-        public float blockRate = 0.15f;
+        public int criticalChance = 15;
+        public int criticalDamageMultiplier = 150;
+        public int evadeRate = 15;
+        public int blockRate = 15;
 
         public int physicalResist = 10;
         public int fireResist = 10;
         public int iceResist = 10;
         public int poisonResist = 10;
         public int lightningResist = 10;
+        public int bleedResist = 10;
     
         [TableList]
         public List<ActiveAbility> activeAbilities;

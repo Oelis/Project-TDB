@@ -25,7 +25,7 @@ namespace Units
         
         private readonly DotLogic dotLogic = new DotLogic();
         
-        private readonly StatModifLogic statModifLogic = new StatModifLogic();
+        protected readonly StatsModifLogic statModifLogic = new StatsModifLogic();
         
         private readonly StatusLogic statusLogic = new StatusLogic();
         
@@ -145,7 +145,7 @@ namespace Units
         public TSelf WithSource(Unit source) { this.source = source; return (TSelf)this; }                                                                                
         public TSelf WithAbilityManager() { this.AbilityController = new AbilityController(this); return (TSelf)this; }                                                         
         public TSelf WithConfig(TConfig config) { this.config = config; return (TSelf)this; }                                                                             
-        public TSelf WithStats(Stats.Stats stats) { this.Stats = new Stats.Stats(new StatsMediator(), config); return (TSelf)this; } 
+        public TSelf WithStats() { this.Stats = new Stats.Stats(statModifLogic, config); return (TSelf)this; }
         public TSelf Clone() => (TSelf)MemberwiseClone();
 
         public abstract TSelf Build();

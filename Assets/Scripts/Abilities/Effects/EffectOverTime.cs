@@ -5,7 +5,6 @@ using Units;
 using UnityEngine;
 
 namespace Abilities.Effects
-
 {
     [Serializable]
     public abstract class EffectOverTime : IEffect
@@ -17,7 +16,7 @@ namespace Abilities.Effects
         public bool CanBeCleanse = true;
         public abstract bool CanBeStacked { get; }
 
-        protected IDamageable CurrentTarget;
+        protected UnitBrain CurrentTarget;
         public event Action<EffectOverTime> OnCompleted;
 
         public virtual void Apply(UnitBrain source, UnitBrain target)
@@ -27,21 +26,33 @@ namespace Abilities.Effects
                 Debug.Log($"[{GetType().Name}] could not be applied to {target.GetType().Name}");
                 return;
             }
+            
             CurrentTarget = target;
-            target.OnTurnStart += Tick;
+
+            if (this is IInstantEffect instant)
+                instant.OnApply(source, target);
+
+            if (this is ITickEffect tickEffect)
+                target.OnTurnStart += tickEffect.Tick;
+
             target.OnTurnEnd += CountDown;
             Debug.Log($"[{GetType().Name}] applied to {target.GetSource().name}");
         }
 
         public virtual void Cleanup()
         {
-            OnCompleted?.Invoke(this);
-            CurrentTarget.OnTurnStart -= Tick;
+            if (this is ITickEffect tickEffect)
+                CurrentTarget.OnTurnStart -= tickEffect.Tick;
+
+            if (this is IInstantEffect instant)
+                instant.OnRemove();
+
             CurrentTarget.OnTurnEnd -= CountDown;
+            OnCompleted?.Invoke(this);
             CurrentTarget = null;
             Debug.Log($"[{GetType().Name}] cleaned up");
         }
-        
+
         private void CountDown()
         {
             switch (_turnDuration)
@@ -54,14 +65,7 @@ namespace Abilities.Effects
                     Debug.Log($"[{GetType().Name}] duration reduced. Turns left: {_turnDuration}");
                     break;
             }
-            if(_turnDuration == 0) Cleanup();
+            if (_turnDuration == 0) Cleanup();
         }
-
-        public virtual void Tick()
-        {
-            
-        }
-
-        
     }
 }

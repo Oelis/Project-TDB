@@ -22,7 +22,6 @@ public class UnitDebugWindow : OdinEditorWindow
     private static readonly FieldInfo BrainAbilityCtrlField = typeof(UnitBrain).GetField("AbilityController", BindingFlags.NonPublic | BindingFlags.Instance);
     private static readonly FieldInfo BrainDotLogicField    = typeof(UnitBrain).GetField("dotLogic",          BindingFlags.NonPublic | BindingFlags.Instance);
     private static readonly FieldInfo BrainImmunityField    = typeof(UnitBrain).GetField("immunityLogic",     BindingFlags.NonPublic | BindingFlags.Instance);
-    private static readonly FieldInfo StatsConfigField      = typeof(Stats.Stats).GetField("_statConfig",     BindingFlags.NonPublic | BindingFlags.Instance);
     private static readonly FieldInfo ActiveAbilitiesField  = typeof(AbilityController).GetField("_activeAbilities",  BindingFlags.NonPublic | BindingFlags.Instance);
     private static readonly FieldInfo PassiveAbilitiesField = typeof(AbilityController).GetField("_passiveAbilities", BindingFlags.NonPublic | BindingFlags.Instance);
     private static readonly FieldInfo DotEffectsField       = typeof(DotLogic).GetField("_doteffects",        BindingFlags.NonPublic | BindingFlags.Instance);
@@ -86,10 +85,7 @@ public class UnitDebugWindow : OdinEditorWindow
         snap.CurrentHealth = (float)(BrainHealthField?.GetValue(brain) ?? 0f);
 
         if (brain.Stats != null)
-        {
-            var config = StatsConfigField?.GetValue(brain.Stats) as UnitConfig;
-            snap.Stats = new StatsSnapshot(config, brain.Stats);
-        }
+            snap.Stats = new StatsSnapshot(brain.Stats);
 
         var dotLogic = BrainDotLogicField?.GetValue(brain) as DotLogic;
         if (dotLogic != null)
@@ -167,10 +163,7 @@ public class UnitDebugWindow : OdinEditorWindow
         snap.CurrentHealth = (float)(BrainHealthField?.GetValue(brain) ?? 0f);
 
         if (brain.Stats != null)
-        {
-            var config = StatsConfigField?.GetValue(brain.Stats) as UnitConfig;
-            snap.Stats = new StatsSnapshot(config, brain.Stats);
-        }
+            snap.Stats = new StatsSnapshot(brain.Stats);
 
         var ctrl = BrainAbilityCtrlField?.GetValue(brain) as AbilityController;
         if (ctrl != null)
@@ -309,25 +302,26 @@ public class StatsSnapshot
 {
     public StatsSnapshot() { }
 
-    public StatsSnapshot(UnitConfig config, Stats.Stats live)
+    public StatsSnapshot(Stats.Stats live)
     {
-        if (config == null) return;
-        Attack         = config.attack;
-        Defense        = config.defense;
-        Intelligence   = live?.Intelligence ?? config.intelligence;
-        Dexterity      = config.dexterity;
-        Strength       = live?.Strength    ?? config.strength;
-        Constitution   = config.constitution;
-        Speed          = config.speed;
-        CriticalChance           = live?.CriChance ?? config.criticalChance;
-        CriticalDamageMultiplier = config.criticalDamageMultiplier;
-        EvadeRate                = config.evadeRate;
-        BlockRate                = config.blockRate;
-        PhysicalResist  = config.physicalResist;
-        FireResist      = config.fireResist;
-        IceResist       = config.iceResist;
-        PoisonResist    = config.poisonResist;
-        LightningResist = config.lightningResist;
+        if (live == null) return;
+        Attack                   = live.Attack;
+        Defense                  = live.Defense;
+        Intelligence             = live.Intelligence;
+        Dexterity                = live.Dexterity;
+        Strength                 = live.Strength;
+        Constitution             = live.Constitution;
+        Speed                    = live.Speed;
+        CriticalChance           = live.CriticalChance;
+        CriticalDamageMultiplier = live.CriticalDamageMultiplier;
+        EvadeRate                = live.EvadeRate;
+        BlockRate                = live.BlockRate;
+        PhysicalResist           = live.PhysicalResist;
+        FireResist               = live.FireResist;
+        IceResist                = live.IceResist;
+        PoisonResist             = live.PoisonResist;
+        LightningResist          = live.LightningResist;
+        BleedResist              = live.BleedResist;
     }
 
     [BoxGroup("Primary Stats")]
@@ -340,10 +334,10 @@ public class StatsSnapshot
     [HorizontalGroup("Primary Stats/Row3"), ReadOnly, LabelWidth(100)] public int Constitution;
 
     [BoxGroup("Combat Stats")]
-    [HorizontalGroup("Combat Stats/Row1"), ReadOnly, LabelWidth(150)] public float CriticalChance;
-    [HorizontalGroup("Combat Stats/Row1"), ReadOnly, LabelWidth(150)] public float CriticalDamageMultiplier;
-    [HorizontalGroup("Combat Stats/Row2"), ReadOnly, LabelWidth(150)] public float EvadeRate;
-    [HorizontalGroup("Combat Stats/Row2"), ReadOnly, LabelWidth(150)] public float BlockRate;
+    [HorizontalGroup("Combat Stats/Row1"), ReadOnly, LabelWidth(150)] public int CriticalChance;
+    [HorizontalGroup("Combat Stats/Row1"), ReadOnly, LabelWidth(150)] public int CriticalDamageMultiplier;
+    [HorizontalGroup("Combat Stats/Row2"), ReadOnly, LabelWidth(150)] public int EvadeRate;
+    [HorizontalGroup("Combat Stats/Row2"), ReadOnly, LabelWidth(150)] public int BlockRate;
 
     [BoxGroup("Resistances")]
     [HorizontalGroup("Resistances/Row1"), ReadOnly, LabelWidth(130)] public int PhysicalResist;
@@ -351,6 +345,7 @@ public class StatsSnapshot
     [HorizontalGroup("Resistances/Row1"), ReadOnly, LabelWidth(130)] public int IceResist;
     [HorizontalGroup("Resistances/Row2"), ReadOnly, LabelWidth(130)] public int PoisonResist;
     [HorizontalGroup("Resistances/Row2"), ReadOnly, LabelWidth(130)] public int LightningResist;
+    [HorizontalGroup("Resistances/Row2"), ReadOnly, LabelWidth(130)] public int BleedResist;
 }
 
 // ===========================================================================

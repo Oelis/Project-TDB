@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Stats
 {
-    public class StatsMediator
+    public class StatsModifLogic
     {
         private readonly LinkedList<StatModifier> _modifiers = new();
-        public event EventHandler<Query> Queries;
-        public void PerformQuery(object sender, Query query) => Queries?.Invoke(sender, query);
+        public event Action<Query> Queries;
+        public void PerformQuery(Query query) => Queries?.Invoke(query);
 
         public void AddModifier(StatModifier modifier)
         {

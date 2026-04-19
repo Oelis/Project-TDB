@@ -10,6 +10,6 @@ namespace Abilities.Effects.Debuffs.DOT
         
         public override bool CanBeStacked => true;
 
-        public override StatType ResistanceStat => StatType.Defense;
+        public override StatType ResistanceStat => StatType.BleedResist;
     }
 }

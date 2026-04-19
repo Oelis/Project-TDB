@@ -5,6 +5,6 @@ namespace Enums
         Attack,Defense,Intelligence,Dexterity,
         Strength,Constitution,Speed,CriticalChance,
         CriticalDamageMultiplier,EvadeRate,BlockRate,FireResist,
-        IceResist,PoisonResist,LightningResist
+        IceResist,PoisonResist,LightningResist,BleedResist,PhysicalResist
     }
 }
