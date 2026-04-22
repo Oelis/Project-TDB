@@ -10,14 +10,14 @@ namespace Abilities.Effects
     public abstract class StatModifierEffect : EffectOverTime
     {
         public override bool CanBeStacked => true;
-        
-        private readonly StatType _type;
-        [SerializeField] private int value;
+
+        protected abstract StatType StatType { get ; }
+        [SerializeField] protected int value;
         
         
         public void Handle(Query query)
         {
-            if (query.StatType == _type)
+            if (query.StatType == StatType)
             {
                 query.Value = Operation(query);
             }
