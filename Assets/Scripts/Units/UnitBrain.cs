@@ -106,6 +106,9 @@ namespace Units
                 case DamageOverTimeEffect damageOverTime:
                     dotLogic.AddDamageOvertime(damageOverTime);
                     break;
+                case StatModifierEffect statModifier:
+                    statModifLogic.AddStatModifEffect(statModifier);
+                    break;
             }
 
             return true;
@@ -121,6 +124,9 @@ namespace Units
                     break;
                 case DamageOverTimeEffect damageOverTime:
                     dotLogic.RemoveDamageOvertime(damageOverTime);
+                    break;
+                case StatModifierEffect statModifier:
+                    statModifLogic.RemoveStatModifEffect(statModifier);
                     break;
             }
             Debug.Log($"[{GetType().Name}] ({source.name}) removed effect: {effect.GetType().Name}");

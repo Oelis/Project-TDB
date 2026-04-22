@@ -1,24 +1,27 @@
 using System;
 using System.Collections.Generic;
+using Abilities.Effects;
 
 namespace Stats
 {
     public class StatsModifLogic
     {
-        private readonly LinkedList<StatModifier> _modifiers = new();
+        private readonly LinkedList<StatModifierEffect> _modifiers = new();
         public event Action<Query> Queries;
         public void PerformQuery(Query query) => Queries?.Invoke(query);
 
-        public void AddModifier(StatModifier modifier)
+        public void AddStatModifEffect(StatModifierEffect statModifier)
         {
-            _modifiers.AddLast(modifier);
-            Queries += modifier.Handle;
-
-            modifier.OnDispose += _ =>
-            {
-                _modifiers.Remove(modifier);
-                Queries -= modifier.Handle;
-            };
+            _modifiers.AddLast(statModifier);
+            Queries += statModifier.Handle;
         }
+
+        public void RemoveStatModifEffect(StatModifierEffect statModifier)
+        {
+            _modifiers.Remove(statModifier);
+            Queries -= statModifier.Handle;
+        }
+
+        
     }
 }

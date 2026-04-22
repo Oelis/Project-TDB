@@ -28,10 +28,7 @@ namespace Abilities.Effects
             }
             
             CurrentTarget = target;
-
-            if (this is IInstantEffect instant)
-                instant.OnApply(source, target);
-
+            
             if (this is ITickEffect tickEffect)
                 target.OnTurnStart += tickEffect.Tick;
 
@@ -43,10 +40,7 @@ namespace Abilities.Effects
         {
             if (this is ITickEffect tickEffect)
                 CurrentTarget.OnTurnStart -= tickEffect.Tick;
-
-            if (this is IInstantEffect instant)
-                instant.OnRemove();
-
+            
             CurrentTarget.OnTurnEnd -= CountDown;
             OnCompleted?.Invoke(this);
             CurrentTarget = null;
