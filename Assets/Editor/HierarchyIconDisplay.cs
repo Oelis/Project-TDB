@@ -27,7 +27,8 @@ namespace Editor
 
         private static void OnHierarchyWindowItemOnGUI(int instanceID, Rect selectionRect)
         {
-            GameObject gameObject = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
+            GameObject gameObject = EditorUtility.EntityIdToObject(instanceID) as GameObject;
+            
             if (gameObject == null) return;
 
             if (PrefabUtility.GetCorrespondingObjectFromSource(gameObject) != null) return;
@@ -45,7 +46,7 @@ namespace Editor
 
             if (content.image == null) return;
         
-            bool isSelected = Selection.instanceIDs.Contains(instanceID);
+            bool isSelected = Selection.entityIds.Contains(instanceID);
             bool isHovering = selectionRect.Contains(Event.current.mousePosition);
         
     

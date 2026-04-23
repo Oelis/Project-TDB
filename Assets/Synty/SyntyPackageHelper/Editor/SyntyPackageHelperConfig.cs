@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(SyntyPackageHelperConfig))]
-public class ExamplePackConfigLoaderEditor : Editor
+public class ExamplePackConfigLoaderEditor : UnityEditor.Editor
 {
     public override void OnInspectorGUI()
     {
