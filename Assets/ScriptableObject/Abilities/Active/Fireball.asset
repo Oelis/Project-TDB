@@ -27,34 +27,13 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 7
       Data: 1|Abilities.EffectEntry, Assembly-CSharp
     - Name: effect
       Entry: 7
-      Data: 2|Abilities.Effects.DirectDamage.FireDirectDamage, Assembly-CSharp
-    - Name: damageAmount
-      Entry: 3
-      Data: 10
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: targeting
-      Entry: 7
-      Data: 3|Abilities.Targeting.AllEnemiesTargeting, Assembly-CSharp
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 4|Abilities.EffectEntry, Assembly-CSharp
-    - Name: effect
-      Entry: 7
-      Data: 5|Abilities.Effects.Debuffs.DOT.FireDot, Assembly-CSharp
+      Data: 2|Abilities.Effects.StatModif.AttackDownDivide, Assembly-CSharp
     - Name: _turnDuration
       Entry: 3
       Data: 1
@@ -64,15 +43,15 @@ MonoBehaviour:
     - Name: CanBeCleanse
       Entry: 5
       Data: true
-    - Name: damagePerTurn
+    - Name: value
       Entry: 3
-      Data: 5
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
     - Name: targeting
       Entry: 7
-      Data: 6|Abilities.Targeting.RandomEnemyTargeting, Assembly-CSharp
+      Data: 3|Abilities.Targeting.AllEnemiesTargeting, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

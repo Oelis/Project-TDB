@@ -1,14 +1,14 @@
 using Enums;
 
-namespace Abilities.Effects.StatModif
+namespace Abilities.Effects.StatModif.Attack
 {
-    public class AttackDownDivide : StatModifierEffect
+    public class AttackDownSubtract : StatModifierEffect
     {
         protected override StatType StatType => StatType.Attack;
 
         public override int Operation(Query query)
         {
-            return query.Value / value;
+            return query.Value - value;
         }
     }
 }

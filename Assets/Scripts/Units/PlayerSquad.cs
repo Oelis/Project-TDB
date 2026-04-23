@@ -1,8 +1,8 @@
 using System;
-using Sirenix.OdinInspector;
+using Units.Template;
 using UnityEngine;
 
-namespace Units.Template
+namespace Units
 {
     [CreateAssetMenu(fileName = "PlayerSquad", menuName = "Unit/PlayerSquad")]
     public class PlayerSquad : ScriptableObject

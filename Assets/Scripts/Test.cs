@@ -32,7 +32,7 @@ public class Test : MonoBehaviour
         
         player.StartTurn();
         enemy.StartTurn();
-        //player.GetAbilityController().CastActiveAbility(ability);
+        player.GetAbilityController().CastActiveAbility(ability);
         
     }
 
