@@ -12,7 +12,7 @@ namespace Abilities.Effects
         [MinValue(-1), ValidateInput(nameof(IsValidDuration), "Turn duration cannot be 0.")]
         public int _turnDuration = 1;
         private bool IsValidDuration(int value) => value != 0;
-        public int MaxStackSize = 1;
+        public abstract int MaxStackSize { get; }
         public bool CanBeCleanse = true;
         public abstract bool CanBeStacked { get; }
 

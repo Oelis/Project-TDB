@@ -6,7 +6,7 @@ namespace Abilities.Effects.StatModif.BlockRate
     {
         protected override StatType StatType => StatType.BlockRate;
 
-        public override int Operation(Query query)
+        protected override int Operation(Query query)
         {
             return query.Value / value;
         }

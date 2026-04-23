@@ -6,7 +6,7 @@ namespace Abilities.Effects.StatModif.Constitution
     {
         protected override StatType StatType => StatType.Constitution;
 
-        public override int Operation(Query query)
+        protected override int Operation(Query query)
         {
             return query.Value * value;
         }

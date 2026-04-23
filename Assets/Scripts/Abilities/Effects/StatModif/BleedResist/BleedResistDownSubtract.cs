@@ -6,7 +6,7 @@ namespace Abilities.Effects.StatModif.BleedResist
     {
         protected override StatType StatType => StatType.BleedResist;
 
-        public override int Operation(Query query)
+        protected override int Operation(Query query)
         {
             return query.Value - value;
         }

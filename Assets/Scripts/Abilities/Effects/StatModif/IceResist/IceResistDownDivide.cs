@@ -6,7 +6,7 @@ namespace Abilities.Effects.StatModif.IceResist
     {
         protected override StatType StatType => StatType.IceResist;
 
-        public override int Operation(Query query)
+        protected override int Operation(Query query)
         {
             return query.Value / value;
         }

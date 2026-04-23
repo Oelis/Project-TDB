@@ -22,10 +22,12 @@ namespace Units
         public event Action OnTurnEnd;
         
         private readonly ImmunityLogic immunityLogic = new ImmunityLogic();
-        
+
         private readonly DotLogic dotLogic = new DotLogic();
-        
+
         protected readonly StatsModifLogic statModifLogic = new StatsModifLogic();
+
+        private readonly MaxStackLogic maxStackLogic = new MaxStackLogic();
         
         private readonly StatusLogic statusLogic = new StatusLogic();
         
@@ -94,7 +96,10 @@ namespace Units
         
         public bool ApplyEffect(EffectOverTime effect)
         {
-            if(immunityLogic.IsImmuneToEffectType(effect.GetType())) return false;
+            if (immunityLogic.IsImmuneToEffectType(effect.GetType())) return false;
+            if (!maxStackLogic.CanAddStack(effect)) return false;
+
+            maxStackLogic.AddStack(effect);
             
             effect.OnCompleted += RemoveEffect;
             
@@ -117,6 +122,7 @@ namespace Units
         public void RemoveEffect(EffectOverTime effect)
         {
             effect.OnCompleted -= RemoveEffect;
+            maxStackLogic.RemoveStack(effect);
             switch (effect)
             {
                 case ImmunityEffect immunity:

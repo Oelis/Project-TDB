@@ -9,7 +9,7 @@ namespace Abilities.Effects
     public abstract class DamageOverTimeEffect : EffectOverTime, IDebuff, ITickEffect
     {
         public int damagePerTurn;
-
+        public override int MaxStackSize => 99;
         public abstract StatType ResistanceStat { get; }
 
         public void Tick()

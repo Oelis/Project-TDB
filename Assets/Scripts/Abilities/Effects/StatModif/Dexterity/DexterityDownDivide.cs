@@ -6,7 +6,7 @@ namespace Abilities.Effects.StatModif.Dexterity
     {
         protected override StatType StatType => StatType.Dexterity;
 
-        public override int Operation(Query query)
+        protected override int Operation(Query query)
         {
             return query.Value / value;
         }

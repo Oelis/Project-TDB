@@ -12,6 +12,8 @@ namespace Abilities.Effects
     {
         public override bool CanBeStacked => true;
         
+        public override int MaxStackSize => 99;
+        
         protected abstract StatType StatType { get; }
         
         private bool IsValidValue(int value) => value != 0;
@@ -25,6 +27,6 @@ namespace Abilities.Effects
                 query.Value = Mathf.Clamp(Operation(query), StatRanges.Get(StatType).Min, StatRanges.Get(StatType).Max);
         }
 
-        public abstract int Operation(Query query);
+        protected abstract int Operation(Query query);
     }
 }

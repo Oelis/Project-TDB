@@ -6,7 +6,7 @@ namespace Abilities.Effects.StatModif.LightningResist
     {
         protected override StatType StatType => StatType.LightningResist;
 
-        public override int Operation(Query query)
+        protected override int Operation(Query query)
         {
             return query.Value + value;
         }

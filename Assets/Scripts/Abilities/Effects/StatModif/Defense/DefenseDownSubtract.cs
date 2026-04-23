@@ -6,7 +6,7 @@ namespace Abilities.Effects.StatModif.Defense
     {
         protected override StatType StatType => StatType.Defense;
 
-        public override int Operation(Query query)
+        protected override int Operation(Query query)
         {
             return query.Value - value;
         }

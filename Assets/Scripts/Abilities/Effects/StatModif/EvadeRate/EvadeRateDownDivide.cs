@@ -6,7 +6,7 @@ namespace Abilities.Effects.StatModif.EvadeRate
     {
         protected override StatType StatType => StatType.EvadeRate;
 
-        public override int Operation(Query query)
+        protected override int Operation(Query query)
         {
             return query.Value / value;
         }

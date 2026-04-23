@@ -6,7 +6,7 @@ namespace Abilities.Effects.StatModif.Intelligence
     {
         protected override StatType StatType => StatType.Intelligence;
 
-        public override int Operation(Query query)
+        protected override int Operation(Query query)
         {
             return query.Value - value;
         }

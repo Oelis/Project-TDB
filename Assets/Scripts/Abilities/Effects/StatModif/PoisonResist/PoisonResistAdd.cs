@@ -6,7 +6,7 @@ namespace Abilities.Effects.StatModif.PoisonResist
     {
         protected override StatType StatType => StatType.PoisonResist;
 
-        public override int Operation(Query query)
+        protected override int Operation(Query query)
         {
             return query.Value + value;
         }
