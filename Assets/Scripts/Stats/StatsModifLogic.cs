@@ -22,6 +22,6 @@ namespace Stats
             Queries -= statModifier.Handle;
         }
 
-        
+        public IEnumerable<StatModifierEffect> GetModifiers() => _modifiers;
     }
 }

@@ -1,14 +1,9 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Abilities;
 using Abilities.Effects;
-using Attributes;
 using Enums;
 using Interfaces;
-using NUnit.Framework;
 using Stats;
 using Units.Logic;
 using UnityEngine;
@@ -106,6 +101,7 @@ namespace Units
             switch (effect)
             {
                 case ImmunityEffect immunity:
+                    CleanupBlockedEffects(immunity);
                     immunityLogic.AddImmunityEffect(immunity);
                     break;
                 case DamageOverTimeEffect damageOverTime:
@@ -136,6 +132,32 @@ namespace Units
                     break;
             }
             Debug.Log($"[{GetType().Name}] ({source.name}) removed effect: {effect.GetType().Name}");
+        }
+
+        private void CleanupBlockedEffects(ImmunityEffect immunity)
+        {
+            var blockedTypes = ImmunityLogic.GetTypeImmunityInfo(immunity.GetType());
+            if (blockedTypes.Length == 0) return;
+
+            CleanupBlocked(dotLogic.GetDamageOvertime(), blockedTypes);
+            CleanupBlocked(statModifLogic.GetModifiers(), blockedTypes);
+            CleanupBlocked(immunityLogic.GetImmunityEffects(), blockedTypes);
+        }
+
+        private static void CleanupBlocked(IEnumerable<EffectOverTime> effectsOverTimes, Type[] blockedTypeArray)
+        {
+            var allEffects = new List<EffectOverTime>(effectsOverTimes);
+            foreach (var effect in allEffects)
+            {
+                foreach (var blockedType in blockedTypeArray)
+                {
+                    if (blockedType.IsAssignableFrom(effect.GetType()))
+                    {
+                        effect.Cleanup();
+                        break;
+                    }
+                }
+            }
         }
 
         public AbilityController GetAbilityController()
