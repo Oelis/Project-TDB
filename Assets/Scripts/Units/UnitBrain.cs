@@ -4,6 +4,7 @@ using Abilities;
 using Abilities.Effects;
 using Enums;
 using Interfaces;
+using Policies;
 using Stats;
 using Units.Logic;
 using UnityEngine;
@@ -31,10 +32,12 @@ namespace Units
         protected Unit source;
 
         private bool _isFirstTurn = true;
+
+        private const int BLOCK_AMOUNT = 50;
         
         public Stats.Stats Stats {get; protected set; } 
         
-        private float currentHealth;
+        private int currentHealth;
 
         public virtual void StartTurn()
         {
@@ -53,20 +56,24 @@ namespace Units
             OnTurnEnd?.Invoke();
         }
         
-        public virtual void TakeDamage(float damage, Type sourceEffectType, StatType ResistanceType)
+        public virtual void TakeDamage(int damage, Type sourceEffectType, StatType ResistanceType)
         {
+            int finalDamage = damage;
             if (immunityLogic.IsImmuneToEffectType(sourceEffectType)) return;
-            // Check if evaded
-            // Check if blocked
-            // Calculate final damage output
-            //var resistQuery = QueryFactory.Create(resistanceStat, 0f);
-            //Stats.Mediator.PerformQuery(this, resistQuery);
-            //float finalDamage = damage * (1f - resistQuery.Value); // or however you model resistance
-            Debug.Log($"{source.name} took {damage} {sourceEffectType.Name} damage. HP: {currentHealth} -> {currentHealth - damage}");
-            currentHealth -= damage;
+            if (LuckPolicy.Create().Roll(Stats.EvadeRate)) return;
+            
+            finalDamage = Mathf.RoundToInt(finalDamage * (1f - Stats.GetStat(ResistanceType) / 100f));
+
+            if (LuckPolicy.Create().Roll(Stats.BlockRate))
+            {
+                finalDamage = Mathf.RoundToInt(finalDamage * (1f - BLOCK_AMOUNT / 100f));
+            }
+            
+            Debug.Log($"{source.name} took {finalDamage} {sourceEffectType.Name} damage. HP: {currentHealth} -> {currentHealth - finalDamage}");
+            currentHealth -= finalDamage;
         }
 
-        public void Heal(float amount)
+        public void Heal(int amount)
         {
             currentHealth += amount;
         }

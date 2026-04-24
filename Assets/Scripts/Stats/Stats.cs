@@ -183,7 +183,29 @@ namespace Stats
             }
         }
 
-        
+        public int GetStat(StatType statType) => statType switch
+        {
+            StatType.Attack                   => Attack,
+            StatType.Defense                  => Defense,
+            StatType.Intelligence             => Intelligence,
+            StatType.Dexterity                => Dexterity,
+            StatType.Strength                 => Strength,
+            StatType.Constitution             => Constitution,
+            StatType.Speed                    => Speed,
+            StatType.CriticalChance           => CriticalChance,
+            StatType.CriticalDamageMultiplier => CriticalDamageMultiplier,
+            StatType.EvadeRate                => EvadeRate,
+            StatType.BlockRate                => BlockRate,
+            StatType.FireResist               => FireResist,
+            StatType.IceResist                => IceResist,
+            StatType.PoisonResist             => PoisonResist,
+            StatType.LightningResist          => LightningResist,
+            StatType.BleedResist              => BleedResist,
+            StatType.PhysicalResist           => PhysicalResist,
+            _                                 => 0
+        };
+
+
     }
 
    

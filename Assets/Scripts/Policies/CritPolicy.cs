@@ -1,30 +1,32 @@
 using System.Collections.Generic;
+using Interfaces;
 using UnityEngine;
 
 namespace Policies
 {
-    public class CritPolicy
+    class LuckPolicy : ILuckPolicy
     {
-        public float baseRate;
-        private static readonly Dictionary<float, CritPolicy> cache = new();
+        public int baseRate;
+        static readonly Dictionary<float,LuckPolicy> cache = new ();
     
-        private CritPolicy(float baseRate) => this.baseRate = baseRate;
-
-        public float Chance(float luck) => Mathf.Clamp01(baseRate * luck);
+        private LuckPolicy(int baseRate) => this.baseRate = baseRate;
     
-        public bool Roll(float luck)=>UnityEngine.Random.value < Chance(luck);
+        public float Chance(int luck) => Mathf.Clamp(Mathf.Round(baseRate + luck),0,100);
+        public bool  Roll(int luck) => Random.Range(0,100) < Chance(luck);
 
-        public static CritPolicy GetOrCreate(float baseRate = 0.05f)
+        public static LuckPolicy Create(int baseRate = 5)
         {
-            if (!cache.TryGetValue(baseRate, out CritPolicy policy))
+            if (!cache.TryGetValue(baseRate, out LuckPolicy policy))
             {
-                policy = new CritPolicy(baseRate);
+                policy = new LuckPolicy(baseRate);
                 cache[baseRate] = policy;
             }
+
             return policy;
         }
-
     }
 }
+
+
 
 

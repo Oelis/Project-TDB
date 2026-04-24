@@ -6,9 +6,9 @@ namespace Interfaces
 {
     public interface IDamageable
     {
-        void TakeDamage(float damage, Type sourceEffectType, StatType ResistanceStat);
+        void TakeDamage(int damage, Type sourceEffectType, StatType ResistanceStat);
         
-        void Heal(float amount);
+        void Heal(int amount);
 
         void Die();
 

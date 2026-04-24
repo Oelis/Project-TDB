@@ -1,6 +1,7 @@
 using System;
 using Enums;
 using Interfaces;
+using Policies;
 using Units;
 using UnityEngine;
 
@@ -15,9 +16,15 @@ namespace Abilities.Effects
         
         public void Apply(UnitBrain source, UnitBrain target)
         {
-            //if(CritPolicy.GetOrCreate().Roll(source.Stats.CriChance)) damageAmount = damageAmount * source.Stats.Strength;
-            Debug.Log($"[DamageEffect] {source.GetSource().name} attacked {target.GetSource().name} for {damageAmount} {GetType()} damage.");
-            target.TakeDamage(damageAmount, GetType(), ResistanceStat);
+            int finaldamage = damageAmount;
+
+            if (LuckPolicy.Create().Roll(source.Stats.CriticalChance))
+            {
+                finaldamage = Mathf.RoundToInt(finaldamage * source.Stats.CriticalDamageMultiplier/100);
+            }
+            
+            Debug.Log($"[DamageEffect] {source.GetSource().name} attacked {target.GetSource().name} for {finaldamage} {GetType()} damage.");
+            target.TakeDamage(finaldamage, GetType(), ResistanceStat);
             
         }
         
