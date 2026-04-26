@@ -15,7 +15,7 @@ namespace Abilities.Effects
         public void Tick()
         {
             Debug.Log($"[{GetType().Name}] has Tick");
-            CurrentTarget.TakeDamage(damagePerTurn, GetType(), ResistanceStat);
+            CurrentTarget.TakeDamage(damagePerTurn, GetType(), ResistanceStat,false,false);
         }
     }
 }

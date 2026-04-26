@@ -56,17 +56,21 @@ namespace Units
             OnTurnEnd?.Invoke();
         }
         
-        public virtual void TakeDamage(int damage, Type sourceEffectType, StatType ResistanceType)
+        public virtual void TakeDamage(int damage, Type sourceEffectType, StatType ResistanceType, bool canBeEvaded, bool canBeBlocked)
         {
             int finalDamage = damage;
             if (immunityLogic.IsImmuneToEffectType(sourceEffectType)) return;
-            if (LuckPolicy.Create().Roll(Stats.EvadeRate)) return;
-            
-            finalDamage = Mathf.RoundToInt(finalDamage * (1f - Stats.GetStat(ResistanceType) / 100f));
-
-            if (LuckPolicy.Create().Roll(Stats.BlockRate))
+            if (canBeEvaded)
             {
-                finalDamage = Mathf.RoundToInt(finalDamage * (1f - BLOCK_AMOUNT / 100f));
+                if (LuckPolicy.Create().Roll(Stats.EvadeRate)) return;
+            }
+            finalDamage = Mathf.RoundToInt(finalDamage * (1f - Stats.GetStat(ResistanceType) / 100f));
+            if (canBeBlocked)
+            {
+                if (LuckPolicy.Create().Roll(Stats.BlockRate))
+                {
+                    finalDamage = Mathf.RoundToInt(finalDamage * (1f - BLOCK_AMOUNT / 100f));
+                } 
             }
             
             Debug.Log($"{source.name} took {finalDamage} {sourceEffectType.Name} damage. HP: {currentHealth} -> {currentHealth - finalDamage}");
@@ -151,7 +155,7 @@ namespace Units
             CleanupBlocked(immunityLogic.GetImmunityEffects(), blockedTypes);
         }
 
-        private static void CleanupBlocked(IEnumerable<EffectOverTime> effectsOverTimes, Type[] blockedTypeArray)
+        private void CleanupBlocked(IEnumerable<EffectOverTime> effectsOverTimes, Type[] blockedTypeArray)
         {
             var allEffects = new List<EffectOverTime>(effectsOverTimes);
             foreach (var effect in allEffects)

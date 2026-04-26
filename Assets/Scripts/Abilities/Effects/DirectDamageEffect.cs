@@ -10,7 +10,9 @@ namespace Abilities.Effects
     [Serializable]
     public abstract class DirectDamageEffect : IEffect
     {
-        public int damageAmount = 10;
+        [SerializeField] protected int damageAmount = 10;
+        [SerializeField] protected bool canBeEvaded = true;
+        [SerializeField] protected bool canBeBlocked = true;
         
         public abstract StatType ResistanceStat { get; }
         
@@ -24,7 +26,7 @@ namespace Abilities.Effects
             }
             
             Debug.Log($"[DamageEffect] {source.GetSource().name} attacked {target.GetSource().name} for {finaldamage} {GetType()} damage.");
-            target.TakeDamage(finaldamage, GetType(), ResistanceStat);
+            target.TakeDamage(finaldamage, GetType(), ResistanceStat, canBeEvaded, canBeBlocked);
             
         }
         
