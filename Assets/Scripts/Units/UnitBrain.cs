@@ -184,6 +184,18 @@ namespace Units
             }
         }
 
+        public List<EffectOverTime> GetAllCleanseableEffects()
+        {
+            var all = new List<EffectOverTime>();
+            foreach (var e in dotLogic.GetDamageOvertime())
+                if (e.CanBeCleanse) all.Add(e);
+            foreach (var e in immunityLogic.GetImmunityEffects())
+                if (e.CanBeCleanse) all.Add(e);
+            foreach (var e in statModifLogic.GetModifiers())
+                if (e.CanBeCleanse) all.Add(e);
+            return all;
+        }
+
         public AbilityController GetAbilityController()
         {
             return AbilityController;

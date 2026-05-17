@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Abilities.Effects;
 
@@ -6,30 +5,30 @@ namespace Units.Logic
 {
     public class MaxStackLogic
     {
-        private readonly Dictionary<Type, int> _currentStacks = new();
+        private readonly Dictionary<object, int> _currentStacks = new();
 
         public bool CanAddStack(EffectOverTime effect)
         {
             if (!effect.CanBeStacked) return false;
-            _currentStacks.TryGetValue(effect.GetType(), out int current);
+            _currentStacks.TryGetValue(effect.StackKey, out int current);
             return current < effect.MaxStackSize;
         }
 
         public void AddStack(EffectOverTime effect)
         {
-            _currentStacks.TryGetValue(effect.GetType(), out int current);
-            _currentStacks[effect.GetType()] = current + 1;
+            _currentStacks.TryGetValue(effect.StackKey, out int current);
+            _currentStacks[effect.StackKey] = current + 1;
         }
 
         public void RemoveStack(EffectOverTime effect)
         {
-            var type = effect.GetType();
-            if (!_currentStacks.TryGetValue(type, out int current)) return;
+            var key = effect.StackKey;
+            if (!_currentStacks.TryGetValue(key, out int current)) return;
 
             if (current <= 1)
-                _currentStacks.Remove(type);
+                _currentStacks.Remove(key);
             else
-                _currentStacks[type] = current - 1;
+                _currentStacks[key] = current - 1;
         }
     }
 }

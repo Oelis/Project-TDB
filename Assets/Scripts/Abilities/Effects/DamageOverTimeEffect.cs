@@ -28,6 +28,7 @@ namespace Abilities.Effects
         public override int MaxStackSize => 99;
         public override bool CanBeStacked => true;
         public override EOTType EOTType => EOTType.Debuff;
+        public override object StackKey => (GetType(), DamageType);
 
 
         public void Tick()

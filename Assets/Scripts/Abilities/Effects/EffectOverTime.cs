@@ -16,6 +16,7 @@ namespace Abilities.Effects
         public abstract int MaxStackSize { get; }
         public bool CanBeCleanse = true;
         public abstract bool CanBeStacked { get; }
+        public virtual object StackKey => GetType();
         public abstract EOTType EOTType { get; }
 
         protected UnitBrain CurrentTarget;
