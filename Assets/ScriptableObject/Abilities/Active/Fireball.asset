@@ -33,19 +33,19 @@ MonoBehaviour:
       Data: 1|Abilities.EffectEntry, Assembly-CSharp
     - Name: effect
       Entry: 7
-      Data: 2|Abilities.Effects.StatModif.AttackDownDivide, Assembly-CSharp
+      Data: 2|Abilities.Effects.DamageOverTimeEffect, Assembly-CSharp
     - Name: _turnDuration
-      Entry: 3
-      Data: 1
-    - Name: MaxStackSize
       Entry: 3
       Data: 1
     - Name: CanBeCleanse
       Entry: 5
       Data: true
-    - Name: value
+    - Name: damagePerTurn
       Entry: 3
-      Data: 2
+      Data: 0
+    - Name: DamageType
+      Entry: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
