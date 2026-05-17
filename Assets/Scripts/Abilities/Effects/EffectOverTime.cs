@@ -1,4 +1,5 @@
 using System;
+using Enums;
 using Interfaces;
 using Sirenix.OdinInspector;
 using Units;
@@ -15,6 +16,7 @@ namespace Abilities.Effects
         public abstract int MaxStackSize { get; }
         public bool CanBeCleanse = true;
         public abstract bool CanBeStacked { get; }
+        public abstract EOTType EOTType { get; }
 
         protected UnitBrain CurrentTarget;
         public event Action<EffectOverTime> OnCompleted;

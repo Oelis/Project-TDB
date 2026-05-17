@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Abilities.Effects;
 using Attributes;
+using Enums;
 
 namespace Units.Logic
 {
@@ -12,26 +13,39 @@ namespace Units.Logic
     {
         private List<ImmunityEffect> _immunityeffects = new();
 
-        private static readonly ConcurrentDictionary<Type, Type[]> TypeImmunityCache = new();
+        private static readonly ConcurrentDictionary<Type, (DamageType[] DamageTypes, EOTType[] EOTTypes)> ImmunityCache = new();
 
-        public static Type[] GetTypeImmunityInfo(Type immunityType)
+        public static (DamageType[] DamageTypes, EOTType[] EOTTypes) GetImmunityInfo(Type immunityType)
         {
-            return TypeImmunityCache.GetOrAdd(immunityType, type =>
+            return ImmunityCache.GetOrAdd(immunityType, type =>
             {
                 var attributes = type.GetCustomAttributes<ImmunityAttribute>();
-                var allImmuneToTypes = new List<Type>();
-                foreach (var attribute in attributes)
-                    allImmuneToTypes.AddRange(attribute.ImmuneToTypes);
-                return allImmuneToTypes.ToArray();
+                var damageTypes = new List<DamageType>();
+                var eotTypes = new List<EOTType>();
+                foreach (var attr in attributes)
+                {
+                    damageTypes.AddRange(attr.ImmuneToDamageTypes);
+                    eotTypes.AddRange(attr.ImmuneToEOTTypes);
+                }
+                return (damageTypes.ToArray(), eotTypes.ToArray());
             });
         }
 
-        public bool IsImmuneToEffectType(Type effectType)
+        public bool IsImmuneToDamageType(DamageType damageType)
         {
             return _immunityeffects.Any(immunity =>
             {
-                var immuneToTypes = GetTypeImmunityInfo(immunity.GetType());
-                return immuneToTypes.Any(immuneType => immuneType.IsAssignableFrom(effectType));
+                var (damageTypes, _) = GetImmunityInfo(immunity.GetType());
+                return damageTypes.Contains(damageType);
+            });
+        }
+
+        public bool IsImmuneToEOTType(EOTType eotType)
+        {
+            return _immunityeffects.Any(immunity =>
+            {
+                var (_, eotTypes) = GetImmunityInfo(immunity.GetType());
+                return eotTypes.Contains(eotType);
             });
         }
 
@@ -39,12 +53,12 @@ namespace Units.Logic
         {
             return _immunityeffects;
         }
-        
+
         public void AddImmunityEffect(ImmunityEffect effect)
         {
             _immunityeffects.Add(effect);
         }
-        
+
         public void RemoveImmunityEffect(ImmunityEffect effect)
         {
             _immunityeffects.Remove(effect);

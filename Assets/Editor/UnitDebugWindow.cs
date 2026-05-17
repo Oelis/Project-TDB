@@ -28,6 +28,7 @@ namespace Editor
         private static readonly FieldInfo ActiveAbilitiesField     = typeof(AbilityController).GetField("_activeAbilities",  BindingFlags.NonPublic | BindingFlags.Instance);
         private static readonly FieldInfo PassiveAbilitiesField    = typeof(AbilityController).GetField("_passiveAbilities", BindingFlags.NonPublic | BindingFlags.Instance);
         private static readonly FieldInfo DotEffectsField          = typeof(DotLogic).GetField("_doteffects",           BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static readonly FieldInfo DotDamagePerTurnField   = typeof(DamageOverTimeEffect).GetField("damagePerTurn", BindingFlags.NonPublic | BindingFlags.Instance);
         private static readonly FieldInfo ImmunityEffectsField     = typeof(ImmunityLogic).GetField("_immunityeffects", BindingFlags.NonPublic | BindingFlags.Instance);
         private static readonly FieldInfo StatsModifModifiersField = typeof(Stats.StatsModifLogic).GetField("_modifiers",   BindingFlags.NonPublic | BindingFlags.Instance);
         private static readonly FieldInfo StatsStatConfigField     = typeof(Stats.Stats).GetField("_statConfig",        BindingFlags.NonPublic | BindingFlags.Instance);
@@ -421,6 +422,7 @@ namespace Editor
     public class DotSnapshot
     {
         [HorizontalGroup("Row"), ReadOnly, LabelWidth(110), GUIColor(1f, 0.5f, 0.3f)] public string EffectType;
+        [HorizontalGroup("Row"), ReadOnly, LabelWidth(110)] public string DamageType;
         [HorizontalGroup("Row"), ReadOnly, LabelWidth(110)] public int DamagePerTurn;
         [HorizontalGroup("Row"), ReadOnly, LabelWidth(110), Tooltip("-1 = infinite")] public int TurnsRemaining;
         [HorizontalGroup("Row"), ReadOnly, LabelWidth(110)] public bool CanBeCleansed;
@@ -428,9 +430,10 @@ namespace Editor
         public DotSnapshot(DamageOverTimeEffect effect)
         {
             EffectType     = FormatTypeName(effect.GetType().Name);
-            DamagePerTurn  = effect.damagePerTurn;
+            DamagePerTurn  = (int)(UnitDebugWindow.DotDamagePerTurnField?.GetValue(effect) ?? 0);
             TurnsRemaining = effect._turnDuration;
             CanBeCleansed  = effect.CanBeCleanse;
+            DamageType     = effect.DamageType.ToString();
         }
 
         private static string FormatTypeName(string raw) =>
@@ -452,10 +455,14 @@ namespace Editor
 
         public ImmunitySnapshot(ImmunityEffect effect)
         {
-            var type        = effect.GetType();
-            EffectType      = FormatTypeName(type.Name);
-            TurnsRemaining  = effect._turnDuration;
-            ImmuneToEffects = ImmunityLogic.GetTypeImmunityInfo(type)?.Select(t => FormatTypeName(t.Name)).ToList() ?? new List<string>();
+            var type       = effect.GetType();
+            EffectType     = FormatTypeName(type.Name);
+            TurnsRemaining = effect._turnDuration;
+
+            var (damageTypes, eotTypes) = ImmunityLogic.GetImmunityInfo(type);
+            ImmuneToEffects = damageTypes.Select(d => d.ToString())
+                .Concat(eotTypes.Select(e => "All " + e + "s"))
+                .ToList();
         }
 
         private static string FormatTypeName(string raw) =>

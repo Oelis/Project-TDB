@@ -56,15 +56,19 @@ namespace Units
             OnTurnEnd?.Invoke();
         }
         
-        public virtual void TakeDamage(int damage, Type sourceEffectType, StatType ResistanceType, bool canBeEvaded, bool canBeBlocked)
+        public virtual void TakeDamage(int damage, DamageType sourceEffectDamageType, bool canBeEvaded, bool canBeBlocked)
         {
+            if (immunityLogic.IsImmuneToDamageType(sourceEffectDamageType)) return;
+            
             int finalDamage = damage;
-            if (immunityLogic.IsImmuneToEffectType(sourceEffectType)) return;
+            
             if (canBeEvaded)
             {
                 if (LuckPolicy.Create().Roll(Stats.EvadeRate)) return;
             }
-            finalDamage = Mathf.RoundToInt(finalDamage * (1f - Stats.GetStat(ResistanceType) / 100f));
+            
+            finalDamage = Mathf.RoundToInt(finalDamage * (1f - Stats.GetStat(Helpers.ResistDic[sourceEffectDamageType]) / 100f));
+            
             if (canBeBlocked)
             {
                 if (LuckPolicy.Create().Roll(Stats.BlockRate))
@@ -73,7 +77,7 @@ namespace Units
                 } 
             }
             
-            Debug.Log($"{source.name} took {finalDamage} {sourceEffectType.Name} damage. HP: {currentHealth} -> {currentHealth - finalDamage}");
+            Debug.Log($"{source.name} took {finalDamage} {sourceEffectDamageType} damage. HP: {currentHealth} -> {currentHealth - finalDamage}");
             currentHealth -= finalDamage;
         }
 
@@ -102,7 +106,7 @@ namespace Units
         
         public bool ApplyEffect(EffectOverTime effect)
         {
-            if (immunityLogic.IsImmuneToEffectType(effect.GetType())) return false;
+            if (immunityLogic.IsImmuneToEOTType(effect.EOTType)) return false;
             if (!maxStackLogic.CanAddStack(effect)) return false;
 
             maxStackLogic.AddStack(effect);
@@ -147,27 +151,36 @@ namespace Units
 
         private void CleanupBlockedEffects(ImmunityEffect immunity)
         {
-            var blockedTypes = ImmunityLogic.GetTypeImmunityInfo(immunity.GetType());
-            if (blockedTypes.Length == 0) return;
+            var (blockedDamageTypes, blockedEOTTypes) = ImmunityLogic.GetImmunityInfo(immunity.GetType());
 
-            CleanupBlocked(dotLogic.GetDamageOvertime(), blockedTypes);
-            CleanupBlocked(statModifLogic.GetModifiers(), blockedTypes);
-            CleanupBlocked(immunityLogic.GetImmunityEffects(), blockedTypes);
+            if (blockedEOTTypes.Length > 0)
+            {
+                CleanupBlocked(dotLogic.GetDamageOvertime(), blockedEOTTypes);
+                CleanupBlocked(statModifLogic.GetModifiers(), blockedEOTTypes);
+                CleanupBlocked(immunityLogic.GetImmunityEffects(), blockedEOTTypes);
+            }
+
+            if (blockedDamageTypes.Length > 0)
+                CleanupBlocked(dotLogic.GetDamageOvertime(), blockedDamageTypes);
         }
 
-        private void CleanupBlocked(IEnumerable<EffectOverTime> effectsOverTimes, Type[] blockedTypeArray)
+        private void CleanupBlocked(IEnumerable<EffectOverTime> effectsOverTimes, EOTType[] blockedEOTTypes)
         {
             var allEffects = new List<EffectOverTime>(effectsOverTimes);
             foreach (var effect in allEffects)
             {
-                foreach (var blockedType in blockedTypeArray)
-                {
-                    if (blockedType.IsAssignableFrom(effect.GetType()))
-                    {
-                        effect.Cleanup();
-                        break;
-                    }
-                }
+                if (System.Array.IndexOf(blockedEOTTypes, effect.EOTType) >= 0)
+                    effect.Cleanup();
+            }
+        }
+
+        private void CleanupBlocked(IEnumerable<EffectOverTime> effectsOverTimes, DamageType[] blockedDamageTypes)
+        {
+            var allEffects = new List<EffectOverTime>(effectsOverTimes);
+            foreach (var effect in allEffects)
+            {
+                if (effect is DamageOverTimeEffect dot && System.Array.IndexOf(blockedDamageTypes, dot.DamageType) >= 0)
+                    effect.Cleanup();
             }
         }
 

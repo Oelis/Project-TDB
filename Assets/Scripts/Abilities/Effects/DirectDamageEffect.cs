@@ -10,11 +10,10 @@ namespace Abilities.Effects
     [Serializable]
     public abstract class DirectDamageEffect : IEffect
     {
-        [SerializeField] protected int damageAmount = 10;
-        [SerializeField] protected bool canBeEvaded = true;
-        [SerializeField] protected bool canBeBlocked = true;
-        
-        public abstract StatType ResistanceStat { get; }
+        [SerializeField] private int damageAmount = 10;
+        [SerializeField] private bool canBeEvaded = true;
+        [SerializeField] private bool canBeBlocked = true;
+        [SerializeField] private DamageType damageType;
         
         public void Apply(UnitBrain source, UnitBrain target)
         {
@@ -25,8 +24,8 @@ namespace Abilities.Effects
                 finaldamage = Mathf.RoundToInt(finaldamage * source.Stats.CriticalDamageMultiplier/100);
             }
             
-            Debug.Log($"[DamageEffect] {source.GetSource().name} attacked {target.GetSource().name} for {finaldamage} {GetType()} damage.");
-            target.TakeDamage(finaldamage, GetType(), ResistanceStat, canBeEvaded, canBeBlocked);
+            Debug.Log($"[DamageEffect] {source.GetSource().name} attacked {target.GetSource().name} for {finaldamage} {damageType} damage.");
+            target.TakeDamage(finaldamage, damageType, canBeEvaded, canBeBlocked);
             
         }
         

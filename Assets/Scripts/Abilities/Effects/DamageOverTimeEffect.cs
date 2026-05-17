@@ -6,16 +6,20 @@ using UnityEngine;
 namespace Abilities.Effects
 {
     [Serializable]
-    public abstract class DamageOverTimeEffect : EffectOverTime, IDebuff, ITickEffect
+    public class DamageOverTimeEffect : EffectOverTime, ITickEffect
     {
-        public int damagePerTurn;
+        [SerializeField] private int damagePerTurn;
+        public DamageType DamageType;
+        
         public override int MaxStackSize => 99;
-        public abstract StatType ResistanceStat { get; }
+        public override bool CanBeStacked => true;
+        public override EOTType EOTType => EOTType.Debuff;
+
 
         public void Tick()
         {
             Debug.Log($"[{GetType().Name}] has Tick");
-            CurrentTarget.TakeDamage(damagePerTurn, GetType(), ResistanceStat,false,false);
+            CurrentTarget.TakeDamage(damagePerTurn, DamageType,false,false);
         }
     }
 }

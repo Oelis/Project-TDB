@@ -1,11 +1,11 @@
 using Attributes;
-using Interfaces;
+using Enums;
 
 namespace Abilities.Effects.Buffs.Immunity
 {
-    [Immunity(typeof(IDebuff))]
-    public class DebuffImmunity : ImmunityEffect, IBuff
+    [Immunity(EOTType.Debuff)]
+    public class DebuffImmunity : ImmunityEffect
     {
-        
+        public override EOTType EOTType => EOTType.Buff;
     }
 }

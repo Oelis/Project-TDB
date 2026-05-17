@@ -1,15 +1,24 @@
 using System;
+using Enums;
 
 namespace Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class ImmunityAttribute : Attribute
     {
-        public Type[] ImmuneToTypes { get; }
+        public DamageType[] ImmuneToDamageTypes { get; }
+        public EOTType[] ImmuneToEOTTypes { get; }
 
-        public ImmunityAttribute(params Type[] immuneToTypes)
+        public ImmunityAttribute(params DamageType[] immuneToDamageTypes)
         {
-            ImmuneToTypes = immuneToTypes ?? Array.Empty<Type>();
+            ImmuneToDamageTypes = immuneToDamageTypes ?? Array.Empty<DamageType>();
+            ImmuneToEOTTypes = Array.Empty<EOTType>();
+        }
+
+        public ImmunityAttribute(params EOTType[] immuneToEOTTypes)
+        {
+            ImmuneToDamageTypes = Array.Empty<DamageType>();
+            ImmuneToEOTTypes = immuneToEOTTypes ?? Array.Empty<EOTType>();
         }
     }
 }
