@@ -23,6 +23,8 @@ namespace Units
 
         protected readonly StatsModifLogic statModifLogic = new StatsModifLogic();
 
+        private readonly HotLogic hotLogic = new HotLogic();
+
         private readonly MaxStackLogic maxStackLogic = new MaxStackLogic();
         
         private readonly StatusLogic statusLogic = new StatusLogic();
@@ -122,6 +124,9 @@ namespace Units
                 case DamageOverTimeEffect damageOverTime:
                     dotLogic.AddDamageOvertime(damageOverTime);
                     break;
+                case HealOverTime healOverTime:
+                    hotLogic.AddHealOverTime(healOverTime);
+                    break;
                 case StatModifierEffect statModifier:
                     statModifLogic.AddStatModifEffect(statModifier);
                     break;
@@ -142,6 +147,9 @@ namespace Units
                 case DamageOverTimeEffect damageOverTime:
                     dotLogic.RemoveDamageOvertime(damageOverTime);
                     break;
+                case HealOverTime healOverTime:
+                    hotLogic.RemoveHealOverTime(healOverTime);
+                    break;
                 case StatModifierEffect statModifier:
                     statModifLogic.RemoveStatModifEffect(statModifier);
                     break;
@@ -156,6 +164,7 @@ namespace Units
             if (blockedEOTTypes.Length > 0)
             {
                 CleanupBlocked(dotLogic.GetDamageOvertime(), blockedEOTTypes);
+                CleanupBlocked(hotLogic.GetHealOverTime(), blockedEOTTypes);
                 CleanupBlocked(statModifLogic.GetModifiers(), blockedEOTTypes);
                 CleanupBlocked(immunityLogic.GetImmunityEffects(), blockedEOTTypes);
             }
@@ -187,12 +196,14 @@ namespace Units
         public List<EffectOverTime> GetAllCleanseableEffects()
         {
             var all = new List<EffectOverTime>();
-            foreach (var e in dotLogic.GetDamageOvertime())
-                if (e.CanBeCleanse) all.Add(e);
-            foreach (var e in immunityLogic.GetImmunityEffects())
-                if (e.CanBeCleanse) all.Add(e);
-            foreach (var e in statModifLogic.GetModifiers())
-                if (e.CanBeCleanse) all.Add(e);
+            foreach (var effect in dotLogic.GetDamageOvertime())
+                if (effect.CanBeCleanse) all.Add(effect);
+            foreach (var effect in hotLogic.GetHealOverTime())
+                if (effect.CanBeCleanse) all.Add(effect);
+            foreach (var effect in immunityLogic.GetImmunityEffects())
+                if (effect.CanBeCleanse) all.Add(effect);
+            foreach (var effect in statModifLogic.GetModifiers())
+                if (effect.CanBeCleanse) all.Add(effect);
             return all;
         }
 

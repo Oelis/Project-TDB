@@ -4,10 +4,10 @@ namespace Enums
     {
         RandomX,
         AllOfType,
-        XOfType,
+        XType,
         AllBuffs,
         AllDebuffs,
-        XOfBuff,
-        XOfDebuff
+        XBuff,
+        XDebuff
     }
 }

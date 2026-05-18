@@ -25,13 +25,13 @@ namespace Abilities.Effects
         private DamageType dotDamageTypeFilter;
 
         private bool NeedsAmount() =>
-            mode is CleanseMode.RandomX or CleanseMode.XOfType ||
-            mode == CleanseMode.XOfBuff ||
-            mode == CleanseMode.XOfDebuff;
+            mode is CleanseMode.RandomX or CleanseMode.XType ||
+            mode == CleanseMode.XBuff ||
+            mode == CleanseMode.XDebuff;
 
         private bool NeedsEffectType() =>
             mode == CleanseMode.AllOfType ||
-            mode == CleanseMode.XOfType;
+            mode == CleanseMode.XType;
 
         private bool NeedsDamageTypeFilter() =>
             NeedsEffectType() &&
@@ -72,7 +72,7 @@ namespace Abilities.Effects
                 case CleanseMode.AllOfType:
                     CleanseAllOfType(effects);
                     break;
-                case CleanseMode.XOfType:
+                case CleanseMode.XType:
                     CleanseXOfType(effects, amount);
                     break;
                 case CleanseMode.AllBuffs:
@@ -81,10 +81,10 @@ namespace Abilities.Effects
                 case CleanseMode.AllDebuffs:
                     CleanseByEOTType(effects, EOTType.Debuff);
                     break;
-                case CleanseMode.XOfBuff:
+                case CleanseMode.XBuff:
                     CleanseRandomByEOTType(effects, EOTType.Buff, amount);
                     break;
-                case CleanseMode.XOfDebuff:
+                case CleanseMode.XDebuff:
                     CleanseRandomByEOTType(effects, EOTType.Debuff, amount);
                     break;
             }
