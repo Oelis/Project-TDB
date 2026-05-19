@@ -25,7 +25,7 @@ namespace Abilities.Effects
         private DamageType dotDamageTypeFilter;
 
         private bool NeedsAmount() =>
-            mode is CleanseMode.RandomX or CleanseMode.XType ||
+            mode is CleanseMode.XType ||
             mode == CleanseMode.XBuff ||
             mode == CleanseMode.XDebuff;
 
@@ -66,9 +66,6 @@ namespace Abilities.Effects
 
             switch (mode)
             {
-                case CleanseMode.RandomX:
-                    CleanseRandom(effects, amount);
-                    break;
                 case CleanseMode.AllOfType:
                     CleanseAllOfType(effects);
                     break;
@@ -90,17 +87,7 @@ namespace Abilities.Effects
             }
         }
 
-        private void CleanseRandom(List<EffectOverTime> effects, int count)
-        {
-            Shuffle(effects);
-            int cleansed = 0;
-            for (int i = 0; i < effects.Count && cleansed < count; i++)
-            {
-                Debug.Log($"[CleanseEffect] Cleansed {effects[i].GetType().Name}");
-                effects[i].Cleanup();
-                cleansed++;
-            }
-        }
+        
 
         private void CleanseAllOfType(List<EffectOverTime> effects)
         {

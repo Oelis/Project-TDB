@@ -27,7 +27,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
       Data: 1|Abilities.EffectEntry, Assembly-CSharp
@@ -42,7 +42,7 @@ MonoBehaviour:
       Data: true
     - Name: damagePerTurn
       Entry: 3
-      Data: 0
+      Data: 74
     - Name: DamageType
       Entry: 3
       Data: 1
@@ -66,7 +66,7 @@ MonoBehaviour:
       Data: 5|Abilities.Effects.CleanseEffect, Assembly-CSharp
     - Name: mode
       Entry: 3
-      Data: 5
+      Data: 1
     - Name: amount
       Entry: 3
       Data: 1
@@ -79,6 +79,18 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 8
+      Data: 
+    - Name: targeting
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Abilities.EffectEntry, Assembly-CSharp
+    - Name: effect
+      Entry: 6
       Data: 
     - Name: targeting
       Entry: 6

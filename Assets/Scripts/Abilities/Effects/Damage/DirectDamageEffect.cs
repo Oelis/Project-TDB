@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Abilities.Effects
 {
     [Serializable]
-    public abstract class DirectDamageEffect : IEffect
+    public class DirectDamageEffect : IEffect
     {
         [SerializeField] private int damageAmount = 10;
         [SerializeField] private bool canBeEvaded = true;

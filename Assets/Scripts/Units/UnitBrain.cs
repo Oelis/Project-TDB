@@ -193,6 +193,20 @@ namespace Units
             }
         }
 
+        public List<EffectOverTime> GetAllFlippableEffects()
+        {
+            var all = new List<EffectOverTime>();
+            foreach (var effect in dotLogic.GetDamageOvertime())
+                if (Helpers.FlipDic.ContainsKey(effect.GetType())) all.Add(effect);
+            foreach (var effect in hotLogic.GetHealOverTime())
+                if (Helpers.FlipDic.ContainsKey(effect.GetType())) all.Add(effect);
+            foreach (var effect in immunityLogic.GetImmunityEffects())
+                if (Helpers.FlipDic.ContainsKey(effect.GetType())) all.Add(effect);
+            foreach (var effect in statModifLogic.GetModifiers())
+                if (Helpers.FlipDic.ContainsKey(effect.GetType())) all.Add(effect);
+            return all;
+        }
+
         public List<EffectOverTime> GetAllCleanseableEffects()
         {
             var all = new List<EffectOverTime>();

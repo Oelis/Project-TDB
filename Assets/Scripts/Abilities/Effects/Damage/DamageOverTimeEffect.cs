@@ -8,9 +8,9 @@ using UnityEngine;
 namespace Abilities.Effects
 {
     [Serializable]
-    public class DamageOverTimeEffect : EffectOverTime, ITickEffect
+    public class DamageOverTimeEffect : EffectOverTime, ITickEffect, IFlippable
     {
-        [SerializeField] private int damagePerTurn;
+        [SerializeField] protected int damagePerTurn;
         [ValueDropdown(nameof(GetAllowedDamageTypes))]
         public DamageType DamageType;
 
@@ -30,6 +30,20 @@ namespace Abilities.Effects
         public override EOTType EOTType => EOTType.Debuff;
         public override object StackKey => (GetType(), DamageType);
 
+
+        public void InitializeFlip(int damage, DamageType type, int duration)
+        {
+            damagePerTurn = damage;
+            DamageType = type;
+            _turnDuration = duration;
+        }
+
+        public EffectOverTime Flip()
+        {
+            HealOverTime flippedEffect = new HealOverTime();
+            flippedEffect.InitializeFlip(damagePerTurn, _turnDuration);
+            return flippedEffect;
+        }
 
         public void Tick()
         {
