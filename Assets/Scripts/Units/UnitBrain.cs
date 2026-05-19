@@ -12,10 +12,19 @@ using UnityEngine;
 namespace Units
 {
     [Serializable]
-    public abstract class UnitBrain : IDamageable
+    public abstract class UnitBrain : IDamageable, ITurnTaker
     {
+        public float SpeedBarValue { get; set; }
         public event Action OnTurnStart;
         public event Action OnTurnEnd;
+        
+        public event Action OnCritDealt;
+        public event Action OnCritMiss;
+        public event Action OnCritReceive;
+        public event Action OnBlock;
+        public event Action OnBlockMiss;
+        public event Action OnDamage;
+        public event Action OnDamageReceive;
         
         private readonly ImmunityLogic immunityLogic = new ImmunityLogic();
 
@@ -168,6 +177,8 @@ namespace Units
             }
             Debug.Log($"[{GetType().Name}] ({source.name}) removed effect: {effect.GetType().Name}");
         }
+
+        
 
         private void CleanupBlockedEffects(ImmunityEffect immunity)
         {
