@@ -9,7 +9,6 @@ namespace Units.Logic
 
         public bool CanAddStack(EffectOverTime effect)
         {
-            if (!effect.CanBeStacked) return false;
             _currentStacks.TryGetValue(effect.StackKey, out int current);
             return current < effect.MaxStackSize;
         }

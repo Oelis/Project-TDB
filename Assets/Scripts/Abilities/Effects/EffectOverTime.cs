@@ -15,7 +15,7 @@ namespace Abilities.Effects
         private bool IsValidDuration(int value) => value != 0;
         public abstract int MaxStackSize { get; }
         public bool CanBeCleanse = true;
-        public abstract bool CanBeStacked { get; }
+        
         public virtual object StackKey => GetType();
         public abstract EOTType EOTType { get; }
 

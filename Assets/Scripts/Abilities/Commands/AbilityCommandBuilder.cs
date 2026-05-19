@@ -16,7 +16,8 @@ namespace Abilities.Commands
         }
 
         public AbilityCommandBuilder AddEffect(IEffect effect, ITargetingStrategy targeting)
-        {                                                                                                                                                                                                                                                    foreach (var target in targeting.Resolve())
+        { 
+            foreach (var target in targeting.Resolve())
                 _commands.Add(new AbilityCommand(effect, _source, target));                                                                                                                                                                            
             return this;                                                                                                                                                                                                                               
         }

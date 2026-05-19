@@ -19,19 +19,24 @@ namespace Editor
     public class UnitDebugWindow : OdinEditorWindow
     {
         // --- Cached reflection ------------------------------------------------
-        private static readonly FieldInfo UnitBrainField           = typeof(Unit).GetField("_Brain",                    BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo BrainHealthField         = typeof(UnitBrain).GetField("currentHealth",        BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo BrainAbilityCtrlField    = typeof(UnitBrain).GetField("AbilityController",    BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo BrainDotLogicField       = typeof(UnitBrain).GetField("dotLogic",             BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo BrainImmunityField       = typeof(UnitBrain).GetField("immunityLogic",        BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo BrainStatModifLogicField = typeof(UnitBrain).GetField("statModifLogic",       BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo ActiveAbilitiesField     = typeof(AbilityController).GetField("_activeAbilities",  BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo PassiveAbilitiesField    = typeof(AbilityController).GetField("_passiveAbilities", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo DotEffectsField          = typeof(DotLogic).GetField("_doteffects",           BindingFlags.NonPublic | BindingFlags.Instance);
-        internal static readonly FieldInfo DotDamagePerTurnField   = typeof(DamageOverTimeEffect).GetField("damagePerTurn", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo ImmunityEffectsField     = typeof(ImmunityLogic).GetField("_immunityeffects", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo StatsModifModifiersField = typeof(Stats.StatsModifLogic).GetField("_modifiers",   BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo StatsStatConfigField     = typeof(Stats.Stats).GetField("_statConfig",        BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo UnitBrainField             = typeof(Unit).GetField("_Brain",                     BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo BrainHealthField           = typeof(UnitBrain).GetField("currentHealth",         BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo BrainAbilityCtrlField      = typeof(UnitBrain).GetField("AbilityController",     BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo BrainDotHotLogicField      = typeof(UnitBrain).GetField("_dotHotLogic",          BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo BrainImmunityField         = typeof(UnitBrain).GetField("immunityLogic",         BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo BrainStatModifLogicField   = typeof(UnitBrain).GetField("statModifLogic",        BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo BrainFlipProtectionField   = typeof(UnitBrain).GetField("flipProtectionLogic",   BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo ActiveAbilitiesField       = typeof(AbilityController).GetField("_activeAbilities",  BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo PassiveAbilitiesField      = typeof(AbilityController).GetField("_passiveAbilities", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo DotEffectsField            = typeof(DotHotLogic).GetField("_dotEffects",         BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo HotEffectsField            = typeof(DotHotLogic).GetField("_hotEffects",         BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static readonly FieldInfo DotDamagePerTurnField     = typeof(DamageOverTimeEffect).GetField("damagePerTurn", BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static readonly FieldInfo HotHealPerTurnField       = typeof(HealOverTime).GetField("healPerTurn",        BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo ImmunityEffectsField       = typeof(ImmunityLogic).GetField("_immunityeffects",  BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo StatsModifModifiersField   = typeof(Stats.StatsModifLogic).GetField("_modifiers",   BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo StatsStatConfigField       = typeof(Stats.Stats).GetField("_statConfig",         BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo SafeguardBuffsField        = typeof(FlipProtectionLogic).GetField("_safeguardBuffs", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo TraumaDebuffsField         = typeof(FlipProtectionLogic).GetField("_traumaDebuffs",  BindingFlags.NonPublic | BindingFlags.Instance);
 
         // --- Window -----------------------------------------------------------
         [MenuItem("Tools/Unit Debug Window")]
@@ -78,15 +83,19 @@ namespace Editor
             var brain = UnitBrainField?.GetValue(unit) as UnitBrain;
             if (brain == null) return;
 
-            snap.CurrentHealth = (float)(BrainHealthField?.GetValue(brain) ?? 0f);
+            snap.CurrentHealth = Convert.ToSingle(BrainHealthField?.GetValue(brain) ?? 0);
             snap.Stats = BuildStatsSnapshot(brain);
 
-            var dotLogic = BrainDotLogicField?.GetValue(brain) as DotLogic;
-            if (dotLogic != null)
+            var dotHotLogic = BrainDotHotLogicField?.GetValue(brain) as DotHotLogic;
+            if (dotHotLogic != null)
             {
-                var newDots = (DotEffectsField?.GetValue(dotLogic) as List<DamageOverTimeEffect>)
+                var newDots = (DotEffectsField?.GetValue(dotHotLogic) as List<DamageOverTimeEffect>)
                     ?.Select(d => new DotSnapshot(d)).ToList() ?? new List<DotSnapshot>();
                 snap.UpdateDots(newDots);
+
+                var newHots = (HotEffectsField?.GetValue(dotHotLogic) as List<HealOverTime>)
+                    ?.Select(h => new HotSnapshot(h)).ToList() ?? new List<HotSnapshot>();
+                snap.UpdateHots(newHots);
             }
 
             var immunityLogic = BrainImmunityField?.GetValue(brain) as ImmunityLogic;
@@ -95,6 +104,13 @@ namespace Editor
                 var newImmunities = (ImmunityEffectsField?.GetValue(immunityLogic) as List<ImmunityEffect>)
                     ?.Select(i => new ImmunitySnapshot(i)).ToList() ?? new List<ImmunitySnapshot>();
                 snap.UpdateImmunities(newImmunities);
+            }
+
+            var flipProtectionLogic = BrainFlipProtectionField?.GetValue(brain) as FlipProtectionLogic;
+            if (flipProtectionLogic != null)
+            {
+                var newFlipProtections = BuildFlipProtectionSnapshots(flipProtectionLogic);
+                snap.UpdateFlipProtections(newFlipProtections);
             }
         }
 
@@ -142,7 +158,7 @@ namespace Editor
             if (brain == null) return snap;
 
             snap.BrainType     = brain.GetType().Name;
-            snap.CurrentHealth = (float)(BrainHealthField?.GetValue(brain) ?? 0f);
+            snap.CurrentHealth = Convert.ToSingle(BrainHealthField?.GetValue(brain) ?? 0);
             snap.Stats         = BuildStatsSnapshot(brain);
 
             var ctrl = BrainAbilityCtrlField?.GetValue(brain) as AbilityController;
@@ -152,16 +168,33 @@ namespace Editor
                 snap.PassiveAbilities = (PassiveAbilitiesField?.GetValue(ctrl) as List<PassiveAbility>)?.Select(a => new AbilitySnapshot(a)).ToList() ?? new List<AbilitySnapshot>();
             }
 
-            var dotLogic = BrainDotLogicField?.GetValue(brain) as DotLogic;
-            if (dotLogic != null)
-                snap.ActiveDots = (DotEffectsField?.GetValue(dotLogic) as List<DamageOverTimeEffect>)?.Select(d => new DotSnapshot(d)).ToList() ?? new List<DotSnapshot>();
+            var dotHotLogic = BrainDotHotLogicField?.GetValue(brain) as DotHotLogic;
+            if (dotHotLogic != null)
+            {
+                snap.ActiveDots = (DotEffectsField?.GetValue(dotHotLogic) as List<DamageOverTimeEffect>)?.Select(d => new DotSnapshot(d)).ToList() ?? new List<DotSnapshot>();
+                snap.ActiveHots = (HotEffectsField?.GetValue(dotHotLogic) as List<HealOverTime>)?.Select(h => new HotSnapshot(h)).ToList()             ?? new List<HotSnapshot>();
+            }
 
             var immunityLogic = BrainImmunityField?.GetValue(brain) as ImmunityLogic;
             if (immunityLogic != null)
                 snap.ActiveImmunities = (ImmunityEffectsField?.GetValue(immunityLogic) as List<ImmunityEffect>)?.Select(i => new ImmunitySnapshot(i)).ToList() ?? new List<ImmunitySnapshot>();
 
+            var flipProtectionLogic = BrainFlipProtectionField?.GetValue(brain) as FlipProtectionLogic;
+            if (flipProtectionLogic != null)
+                snap.ActiveFlipProtections = BuildFlipProtectionSnapshots(flipProtectionLogic);
+
             snap.BuildInnerTrees();
             return snap;
+        }
+
+        private static List<FlipProtectionSnapshot> BuildFlipProtectionSnapshots(FlipProtectionLogic logic)
+        {
+            var result = new List<FlipProtectionSnapshot>();
+            var safeguards = SafeguardBuffsField?.GetValue(logic) as List<SafeguardBuff>;
+            var traumas    = TraumaDebuffsField?.GetValue(logic)  as List<TraumaDebuff>;
+            if (safeguards != null) result.AddRange(safeguards.Select(e => new FlipProtectionSnapshot(e)));
+            if (traumas    != null) result.AddRange(traumas.Select(e => new FlipProtectionSnapshot(e)));
+            return result;
         }
 
         // --- Stat breakdown ---------------------------------------------------
@@ -277,6 +310,16 @@ namespace Editor
             foreach (var tree in _dotTrees) { tree.Draw(false); GUILayout.Space(2); }
         }
 
+        [HideInInspector] public List<HotSnapshot> ActiveHots = new List<HotSnapshot>();
+        private List<PropertyTree> _hotTrees = new List<PropertyTree>();
+
+        [FoldoutGroup("HoT Effects"), OnInspectorGUI]
+        private void DrawHots()
+        {
+            if (_hotTrees.Count == 0) { EditorGUILayout.LabelField("None", EditorStyles.centeredGreyMiniLabel); return; }
+            foreach (var tree in _hotTrees) { tree.Draw(false); GUILayout.Space(2); }
+        }
+
         [HideInInspector] public List<ImmunitySnapshot> ActiveImmunities = new List<ImmunitySnapshot>();
         private List<PropertyTree> _immunityTrees = new List<PropertyTree>();
 
@@ -287,12 +330,24 @@ namespace Editor
             foreach (var tree in _immunityTrees) { tree.Draw(false); GUILayout.Space(2); }
         }
 
+        [HideInInspector] public List<FlipProtectionSnapshot> ActiveFlipProtections = new List<FlipProtectionSnapshot>();
+        private List<PropertyTree> _flipProtectionTrees = new List<PropertyTree>();
+
+        [FoldoutGroup("Flip Protection"), OnInspectorGUI]
+        private void DrawFlipProtections()
+        {
+            if (_flipProtectionTrees.Count == 0) { EditorGUILayout.LabelField("None", EditorStyles.centeredGreyMiniLabel); return; }
+            foreach (var tree in _flipProtectionTrees) { tree.Draw(false); GUILayout.Space(2); }
+        }
+
         public void BuildInnerTrees()
         {
-            _activeTrees   = ActiveAbilities.Select(a => PropertyTree.Create(a)).ToList();
-            _passiveTrees  = PassiveAbilities.Select(a => PropertyTree.Create(a)).ToList();
-            _dotTrees      = ActiveDots.Select(d => PropertyTree.Create(d)).ToList();
-            _immunityTrees = ActiveImmunities.Select(i => PropertyTree.Create(i)).ToList();
+            _activeTrees          = ActiveAbilities.Select(a => PropertyTree.Create(a)).ToList();
+            _passiveTrees         = PassiveAbilities.Select(a => PropertyTree.Create(a)).ToList();
+            _dotTrees             = ActiveDots.Select(d => PropertyTree.Create(d)).ToList();
+            _hotTrees             = ActiveHots.Select(h => PropertyTree.Create(h)).ToList();
+            _immunityTrees        = ActiveImmunities.Select(i => PropertyTree.Create(i)).ToList();
+            _flipProtectionTrees  = ActiveFlipProtections.Select(f => PropertyTree.Create(f)).ToList();
         }
 
         public void UpdateDots(List<DotSnapshot> incoming)
@@ -311,6 +366,22 @@ namespace Editor
             }
         }
 
+        public void UpdateHots(List<HotSnapshot> incoming)
+        {
+            if (incoming.Count != ActiveHots.Count)
+            {
+                foreach (var t in _hotTrees) t.Dispose();
+                ActiveHots = incoming;
+                _hotTrees  = ActiveHots.Select(h => PropertyTree.Create(h)).ToList();
+                return;
+            }
+            for (int i = 0; i < incoming.Count; i++)
+            {
+                ActiveHots[i].TurnsRemaining = incoming[i].TurnsRemaining;
+                ActiveHots[i].HealPerTurn    = incoming[i].HealPerTurn;
+            }
+        }
+
         public void UpdateImmunities(List<ImmunitySnapshot> incoming)
         {
             if (incoming.Count != ActiveImmunities.Count)
@@ -324,12 +395,27 @@ namespace Editor
                 ActiveImmunities[i].TurnsRemaining = incoming[i].TurnsRemaining;
         }
 
+        public void UpdateFlipProtections(List<FlipProtectionSnapshot> incoming)
+        {
+            if (incoming.Count != ActiveFlipProtections.Count)
+            {
+                foreach (var t in _flipProtectionTrees) t.Dispose();
+                ActiveFlipProtections = incoming;
+                _flipProtectionTrees  = ActiveFlipProtections.Select(f => PropertyTree.Create(f)).ToList();
+                return;
+            }
+            for (int i = 0; i < incoming.Count; i++)
+                ActiveFlipProtections[i].TurnsRemaining = incoming[i].TurnsRemaining;
+        }
+
         public void Dispose()
         {
-            foreach (var t in _activeTrees)   t.Dispose();
-            foreach (var t in _passiveTrees)  t.Dispose();
-            foreach (var t in _dotTrees)      t.Dispose();
-            foreach (var t in _immunityTrees) t.Dispose();
+            foreach (var t in _activeTrees)          t.Dispose();
+            foreach (var t in _passiveTrees)         t.Dispose();
+            foreach (var t in _dotTrees)             t.Dispose();
+            foreach (var t in _hotTrees)             t.Dispose();
+            foreach (var t in _immunityTrees)        t.Dispose();
+            foreach (var t in _flipProtectionTrees)  t.Dispose();
         }
     }
 
@@ -441,6 +527,29 @@ namespace Editor
     }
 
 // ===========================================================================
+//  HoT Snapshot
+// ===========================================================================
+    [Serializable]
+    public class HotSnapshot
+    {
+        [HorizontalGroup("Row"), ReadOnly, LabelWidth(110), GUIColor(0.4f, 1f, 0.5f)] public string EffectType;
+        [HorizontalGroup("Row"), ReadOnly, LabelWidth(110)] public int HealPerTurn;
+        [HorizontalGroup("Row"), ReadOnly, LabelWidth(110), Tooltip("-1 = infinite")] public int TurnsRemaining;
+        [HorizontalGroup("Row"), ReadOnly, LabelWidth(110)] public bool CanBeCleansed;
+
+        public HotSnapshot(HealOverTime effect)
+        {
+            EffectType     = FormatTypeName(effect.GetType().Name);
+            HealPerTurn    = (int)(UnitDebugWindow.HotHealPerTurnField?.GetValue(effect) ?? 0);
+            TurnsRemaining = effect._turnDuration;
+            CanBeCleansed  = effect.CanBeCleanse;
+        }
+
+        private static string FormatTypeName(string raw) =>
+            System.Text.RegularExpressions.Regex.Replace(raw, "(?<!^)([A-Z])", " $1");
+    }
+
+// ===========================================================================
 //  Immunity Snapshot
 // ===========================================================================
     [Serializable]
@@ -463,6 +572,29 @@ namespace Editor
             ImmuneToEffects = damageTypes.Select(d => d.ToString())
                 .Concat(eotTypes.Select(e => "All " + e + "s"))
                 .ToList();
+        }
+
+        private static string FormatTypeName(string raw) =>
+            System.Text.RegularExpressions.Regex.Replace(raw, "(?<!^)([A-Z])", " $1");
+    }
+
+// ===========================================================================
+//  Flip Protection Snapshot
+// ===========================================================================
+    [Serializable]
+    public class FlipProtectionSnapshot
+    {
+        [HorizontalGroup("Row"), ReadOnly, LabelWidth(140), GUIColor(1f, 0.85f, 0.4f)] public string EffectType;
+        [HorizontalGroup("Row"), ReadOnly, LabelWidth(140)] public string Protects;
+        [HorizontalGroup("Row"), ReadOnly, LabelWidth(140), Tooltip("-1 = infinite")] public int TurnsRemaining;
+        [HorizontalGroup("Row"), ReadOnly, LabelWidth(140)] public bool CanBeCleansed;
+
+        public FlipProtectionSnapshot(EffectOverTime effect)
+        {
+            EffectType     = FormatTypeName(effect.GetType().Name);
+            Protects       = effect.EOTType == EOTType.Buff ? "Buffs" : "Debuffs";
+            TurnsRemaining = effect._turnDuration;
+            CanBeCleansed  = effect.CanBeCleanse;
         }
 
         private static string FormatTypeName(string raw) =>

@@ -3,7 +3,7 @@ using Units;
 
 namespace Abilities.Effects
 {
-    public class StatusEffect : IEffect
+    public abstract class StatusEffect : IEffect
     {
         public void Apply(UnitBrain source, UnitBrain target)
         {

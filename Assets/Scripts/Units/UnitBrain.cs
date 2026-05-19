@@ -19,15 +19,15 @@ namespace Units
         
         private readonly ImmunityLogic immunityLogic = new ImmunityLogic();
 
-        private readonly DotLogic dotLogic = new DotLogic();
+        private readonly DotHotLogic _dotHotLogic = new DotHotLogic();
 
         protected readonly StatsModifLogic statModifLogic = new StatsModifLogic();
 
-        private readonly HotLogic hotLogic = new HotLogic();
-
         private readonly MaxStackLogic maxStackLogic = new MaxStackLogic();
-        
+
         private readonly StatusLogic statusLogic = new StatusLogic();
+
+        private readonly FlipProtectionLogic flipProtectionLogic = new FlipProtectionLogic();
         
         protected AbilityController AbilityController;
 
@@ -90,7 +90,7 @@ namespace Units
 
         public virtual void Die()
         {
-            var activeDot = dotLogic.GetDamageOvertime();
+            var activeDot = _dotHotLogic.GetDamageOvertime();
             foreach (var effect in activeDot)
             {
                 effect.OnCompleted -= RemoveEffect;
@@ -122,13 +122,19 @@ namespace Units
                     immunityLogic.AddImmunityEffect(immunity);
                     break;
                 case DamageOverTimeEffect damageOverTime:
-                    dotLogic.AddDamageOvertime(damageOverTime);
+                    _dotHotLogic.AddDamageOvertime(damageOverTime);
                     break;
                 case HealOverTime healOverTime:
-                    hotLogic.AddHealOverTime(healOverTime);
+                    _dotHotLogic.AddHealOverTime(healOverTime);
                     break;
                 case StatModifierEffect statModifier:
                     statModifLogic.AddStatModifEffect(statModifier);
+                    break;
+                case SafeguardBuff safeguard:
+                    flipProtectionLogic.Add(safeguard);
+                    break;
+                case TraumaDebuff trauma:
+                    flipProtectionLogic.Add(trauma);
                     break;
             }
 
@@ -145,13 +151,19 @@ namespace Units
                     immunityLogic.RemoveImmunityEffect(immunity);
                     break;
                 case DamageOverTimeEffect damageOverTime:
-                    dotLogic.RemoveDamageOvertime(damageOverTime);
+                    _dotHotLogic.RemoveDamageOvertime(damageOverTime);
                     break;
                 case HealOverTime healOverTime:
-                    hotLogic.RemoveHealOverTime(healOverTime);
+                    _dotHotLogic.RemoveHealOverTime(healOverTime);
                     break;
                 case StatModifierEffect statModifier:
                     statModifLogic.RemoveStatModifEffect(statModifier);
+                    break;
+                case SafeguardBuff safeguard:
+                    flipProtectionLogic.Remove(safeguard);
+                    break;
+                case TraumaDebuff trauma:
+                    flipProtectionLogic.Remove(trauma);
                     break;
             }
             Debug.Log($"[{GetType().Name}] ({source.name}) removed effect: {effect.GetType().Name}");
@@ -163,14 +175,14 @@ namespace Units
 
             if (blockedEOTTypes.Length > 0)
             {
-                CleanupBlocked(dotLogic.GetDamageOvertime(), blockedEOTTypes);
-                CleanupBlocked(hotLogic.GetHealOverTime(), blockedEOTTypes);
+                CleanupBlocked(_dotHotLogic.GetDamageOvertime(), blockedEOTTypes);
+                CleanupBlocked(_dotHotLogic.GetHealOverTime(), blockedEOTTypes);
                 CleanupBlocked(statModifLogic.GetModifiers(), blockedEOTTypes);
                 CleanupBlocked(immunityLogic.GetImmunityEffects(), blockedEOTTypes);
             }
 
             if (blockedDamageTypes.Length > 0)
-                CleanupBlocked(dotLogic.GetDamageOvertime(), blockedDamageTypes);
+                CleanupBlocked(_dotHotLogic.GetDamageOvertime(), blockedDamageTypes);
         }
 
         private void CleanupBlocked(IEnumerable<EffectOverTime> effectsOverTimes, EOTType[] blockedEOTTypes)
@@ -193,30 +205,35 @@ namespace Units
             }
         }
 
+        public bool HasSafeguardBuff() => flipProtectionLogic.HasSafeguard();
+        public bool HasTraumaDebuff()  => flipProtectionLogic.HasTrauma();
+
         public List<EffectOverTime> GetAllFlippableEffects()
         {
             var all = new List<EffectOverTime>();
-            foreach (var effect in dotLogic.GetDamageOvertime())
-                if (Helpers.FlipDic.ContainsKey(effect.GetType())) all.Add(effect);
-            foreach (var effect in hotLogic.GetHealOverTime())
-                if (Helpers.FlipDic.ContainsKey(effect.GetType())) all.Add(effect);
+            foreach (var effect in _dotHotLogic.GetDamageOvertime())
+                if (effect is IFlippable) all.Add(effect);
+            foreach (var effect in _dotHotLogic.GetHealOverTime())
+                if (effect is IFlippable) all.Add(effect);
             foreach (var effect in immunityLogic.GetImmunityEffects())
-                if (Helpers.FlipDic.ContainsKey(effect.GetType())) all.Add(effect);
+                if (effect is IFlippable) all.Add(effect);
             foreach (var effect in statModifLogic.GetModifiers())
-                if (Helpers.FlipDic.ContainsKey(effect.GetType())) all.Add(effect);
+                if (effect is IFlippable) all.Add(effect);
             return all;
         }
 
         public List<EffectOverTime> GetAllCleanseableEffects()
         {
             var all = new List<EffectOverTime>();
-            foreach (var effect in dotLogic.GetDamageOvertime())
+            foreach (var effect in _dotHotLogic.GetDamageOvertime())
                 if (effect.CanBeCleanse) all.Add(effect);
-            foreach (var effect in hotLogic.GetHealOverTime())
+            foreach (var effect in _dotHotLogic.GetHealOverTime())
                 if (effect.CanBeCleanse) all.Add(effect);
             foreach (var effect in immunityLogic.GetImmunityEffects())
                 if (effect.CanBeCleanse) all.Add(effect);
             foreach (var effect in statModifLogic.GetModifiers())
+                if (effect.CanBeCleanse) all.Add(effect);
+            foreach (var effect in flipProtectionLogic.GetAllEffects())
                 if (effect.CanBeCleanse) all.Add(effect);
             return all;
         }

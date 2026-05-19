@@ -10,8 +10,6 @@ namespace Abilities.Effects
 {
     public abstract class StatModifierEffect : EffectOverTime
     {
-        public override bool CanBeStacked => true;
-        
         public override int MaxStackSize => 99;
         
         protected abstract StatType StatType { get; }

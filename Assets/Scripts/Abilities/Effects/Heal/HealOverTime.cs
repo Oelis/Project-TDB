@@ -9,7 +9,6 @@ namespace Abilities.Effects
     public class HealOverTime : EffectOverTime, ITickEffect, IFlippable
     {
         public override int MaxStackSize => 99;
-        public override bool CanBeStacked => true;
         public override EOTType EOTType => EOTType.Buff;
 
         [SerializeField] protected int healPerTurn;

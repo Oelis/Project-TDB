@@ -43,7 +43,7 @@ namespace Abilities.Effects
                 catch { continue; }
 
                 foreach (var t in types)
-                    if (!t.IsAbstract && typeof(EffectOverTime).IsAssignableFrom(t) && Helpers.FlipDic.ContainsKey(t))
+                    if (!t.IsAbstract && typeof(EffectOverTime).IsAssignableFrom(t) && typeof(IFlippable).IsAssignableFrom(t))
                         result.Add(new ValueDropdownItem<string>(t.Name, t.AssemblyQualifiedName));
             }
             return result;
@@ -122,8 +122,9 @@ namespace Abilities.Effects
 
         private void DoFlip(EffectOverTime effect, UnitBrain source, UnitBrain target)
         {
-            if (effect is not IFlippable flippable) return;
-            EffectOverTime flipped = flippable.Flip();
+            if (effect.EOTType == EOTType.Buff   && target.HasSafeguardBuff()) return;
+            if (effect.EOTType == EOTType.Debuff && target.HasTraumaDebuff())  return;
+            EffectOverTime flipped = ((IFlippable)effect).Flip();
             Debug.Log($"[FlipEffect] {effect.GetType().Name} -> {flipped.GetType().Name}");
             effect.Cleanup();
             flipped.Apply(source, target);

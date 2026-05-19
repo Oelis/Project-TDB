@@ -27,7 +27,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 2
     - Name: 
       Entry: 7
       Data: 1|Abilities.EffectEntry, Assembly-CSharp
@@ -63,37 +63,27 @@ MonoBehaviour:
       Data: 4|Abilities.EffectEntry, Assembly-CSharp
     - Name: effect
       Entry: 7
-      Data: 5|Abilities.Effects.CleanseEffect, Assembly-CSharp
-    - Name: mode
+      Data: 5|Abilities.Effects.StatModif.AttackUp, Assembly-CSharp
+    - Name: _turnDuration
       Entry: 3
       Data: 1
-    - Name: amount
+    - Name: CanBeCleanse
+      Entry: 5
+      Data: true
+    - Name: value
       Entry: 3
-      Data: 1
-    - Name: effectTypeFullName
-      Entry: 1
-      Data: Abilities.Effects.DamageOverTimeEffect, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-    - Name: dotDamageTypeFilter
+      Data: 2
+    - Name: operationType
       Entry: 3
       Data: 0
     - Name: 
       Entry: 8
       Data: 
     - Name: targeting
-      Entry: 6
-      Data: 
+      Entry: 7
+      Data: 6|Abilities.Targeting.SelfTargeting, Assembly-CSharp
     - Name: 
       Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 6|Abilities.EffectEntry, Assembly-CSharp
-    - Name: effect
-      Entry: 6
-      Data: 
-    - Name: targeting
-      Entry: 6
       Data: 
     - Name: 
       Entry: 8
